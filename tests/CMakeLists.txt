@@ -2,7 +2,11 @@
 project(LightSharkTests C)
 
 add_executable(LightSharkTests
-    tests/tests.c
+    tests/main.c
+
+    tests/unity/unity.h
+    tests/unity/example_tests.c
+    tests/unity/example_tests.h
 )
 
 target_link_libraries(LightSharkTests PRIVATE LightShark)
