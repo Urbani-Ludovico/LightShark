@@ -23,17 +23,7 @@ add_library(LightShark STATIC
 )
 
 #----------------------------------------
-# Examples
+# Includes
 #----------------------------------------
 
-project(LightSharkExamples C)
-
-add_executable(LightSharkExamples
-    examples/examples.c
-
-    examples/create.h
-
-    examples/create.c
-)
-
-target_link_libraries(LightSharkExamples PRIVATE LightShark)
+include(examples/CMakeLists.txt)
