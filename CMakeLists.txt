@@ -7,4 +7,8 @@ include_directories(include)
 
 add_library(LightShark STATIC
     include/LightShark.h
+
+    include/Engine.h
+
+    src/Engine.c
 )
