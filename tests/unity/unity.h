@@ -6,7 +6,7 @@
 #include <stdint.h>
 
 #define UNITY_TEST_PARAMETERS unsigned int* _unity_assert_count, unsigned int* _unity_assert_passed_count, unsigned int* _unity_assert_failed_count
-#define UNITY_TEST_RETURN int
+#define UNITY_TEST_RETURN bool
 
 #define UNITY_BEGIN \
     unsigned int _unity_header_count = 0; \
@@ -16,7 +16,7 @@
     unsigned int _unity_assert_count = 0; \
     unsigned int _unity_assert_passed_count = 0; \
     unsigned int _unity_assert_failed_count = 0; \
-    int result; \
+    bool result; \
     printf("Begin Unit Testing\n\n----------------------------------------\n\n");
 
 #define UNITY_END \
@@ -43,7 +43,7 @@
     printf(name); \
     printf("\n"); \
     result = func(&_unity_assert_count, &_unity_assert_passed_count, &_unity_assert_failed_count); \
-    if (result == 0) { \
+    if (result) { \
         _unity_test_passed_count++; \
     } else { \
         _unity_test_failed_count++; \
@@ -58,7 +58,7 @@
     if (_unity_test_assert_failed_count > 0) { \
         printf("\t\033[0;31mPassed %u/%u asserts. %u assert failed!\033[0m\n", _unity_test_assert_passed_count, _unity_test_assert_count, _unity_test_assert_failed_count); \
     } \
-    return _unity_test_assert_failed_count;
+    return _unity_test_assert_failed_count == 0;
 
 #define UNITY_ASSERT_BEGIN \
     _unity_test_assert_count++; \
