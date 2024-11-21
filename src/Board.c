@@ -1,12 +1,12 @@
 
 #include "Board.h"
 
-struct ls_board_t {
+struct _ls_board_t {
 
 };
 
 ls_board_t ls_board_init() {
-    const auto engine = (ls_board_t)calloc(1, sizeof(struct ls_board_t));
+    const auto engine = (ls_board_t)calloc(1, sizeof(ls_board_t));
 
     return engine;
 }
