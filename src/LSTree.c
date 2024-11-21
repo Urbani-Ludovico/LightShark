@@ -1,5 +1,5 @@
 
-#include "Tree.h"
+#include "LSTree.h"
 
 struct _ls_tree_t {
     ls_board_t board;

@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 
-#include "Board.h"
+#include "LSBoard.h"
 
 typedef struct _ls_tree_t* ls_tree_t;
 

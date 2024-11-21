@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 
-#include "Board.h"
-#include "Tree.h"
+#include "LSBoard.h"
+#include "LSTree.h"
 
 typedef struct _ls_t* ls_t;
 

@@ -1,5 +1,5 @@
 
-#include "Board.h"
+#include "LSBoard.h"
 
 struct _ls_board_t {
 

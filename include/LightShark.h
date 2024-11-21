@@ -1,8 +1,8 @@
 #ifndef LIGHTSHARK_H
 #define LIGHTSHARK_H
 
-#include "Board.h"
-#include "Engine.h"
-#include "Tree.h"
+#include "LSBoard.h"
+#include "LSEngine.h"
+#include "LSTree.h"
 
 #endif

@@ -8,11 +8,11 @@ include_directories(include)
 add_library(LightShark STATIC
     include/LightShark.h
 
-    include/Board.h
-    include/Engine.h
-    include/Tree.h
+    include/LSBoard.h
+    include/LSEngine.h
+    include/LSTree.h
 
-    src/Board.c
-    src/Engine.c
-    src/Tree.c
+    src/LSBoard.c
+    src/LSEngine.c
+    src/LSTree.c
 )
