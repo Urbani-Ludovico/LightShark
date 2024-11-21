@@ -2,7 +2,7 @@
 #include "LSBoard.h"
 
 ls_board_t ls_board_init() {
-    return (ls_board_t)calloc(1, sizeof(struct _ls_board_t));
+    return calloc(1, sizeof(struct _ls_board_t));
 }
 
 void ls_board_destroy(const ls_board_t board) {
