@@ -72,6 +72,8 @@ char* ls_board_to_string(const ls_board_t board) {
             string[i] = 'b';
         } else if (board->black_pawn & and) {
             string[i] = 'p';
+        } else {
+            string[i] = ' ';
         }
     }
 
