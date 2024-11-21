@@ -11,5 +11,7 @@ ls_t ls_init() {
 }
 
 void ls_destroy(const ls_t engine) {
+    ls_tree_destroy(engine->tree);
+
     free(engine);
 }
