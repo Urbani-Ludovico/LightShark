@@ -54,41 +54,41 @@ char* ls_board_to_string(const ls_board_t board) {
 
 
         if (board->white_king & and) {
-            string[i] = "K";
+            string[i] = 'K';
         }
         if (board->white_queen & and) {
-            string[i] = "Q";
+            string[i] = 'Q';
         }
         if (board->white_rock & and) {
-            string[i] = "R";
+            string[i] = 'R';
         }
         if (board->white_knight & and) {
-            string[i] = "N";
+            string[i] = 'N';
         }
         if (board->white_bishop & and) {
-            string[i] = "B";
+            string[i] = 'B';
         }
         if (board->white_pawn & and) {
-            string[i] = "P";
+            string[i] = 'P';
         }
 
         if (board->black_king & and) {
-            string[i] = "k";
+            string[i] = 'k';
         }
         if (board->black_queen & and) {
-            string[i] = "q";
+            string[i] = 'q';
         }
         if (board->black_rock & and) {
-            string[i] = "r";
+            string[i] = 'r';
         }
         if (board->black_knight & and) {
-            string[i] = "n";
+            string[i] = 'n';
         }
         if (board->black_bishop & and) {
-            string[i] = "b";
+            string[i] = 'b';
         }
         if (board->black_pawn & and) {
-            string[i] = "p";
+            string[i] = 'p';
         }
     }
 
