@@ -1,10 +1,6 @@
 
 #include "LSBoard.h"
 
-struct _ls_board_t {
-
-};
-
 ls_board_t ls_board_init() {
     const auto board = (ls_board_t)calloc(1, sizeof(struct _ls_board_t));
 

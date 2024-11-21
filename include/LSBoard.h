@@ -4,6 +4,9 @@
 
 #include <stdlib.h>
 
+struct _ls_board_t {
+
+};
 typedef struct _ls_board_t* ls_board_t;
 
 ls_board_t ls_board_init();
