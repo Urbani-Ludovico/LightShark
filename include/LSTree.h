@@ -8,4 +8,6 @@
 
 typedef struct _ls_tree_t* ls_tree_t;
 
+ls_tree_t ls_tree_init();
+
 #endif
