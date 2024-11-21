@@ -6,5 +6,7 @@ int example_create() {
 
     ls_board_print(engine->board);
 
+    ls_destroy(engine);
+
     return 0;
 }
