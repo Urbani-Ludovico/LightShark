@@ -3,6 +3,7 @@
 #define UNITY_H
 
 #include <stdio.h>
+#include <stdint.h>
 
 #define UNITY_TEST_PARAMETERS unsigned int* _unity_assert_count, unsigned int* _unity_assert_passed_count, unsigned int* _unity_assert_failed_count
 #define UNITY_TEST_RETURN int
@@ -21,10 +22,10 @@
 #define UNITY_END \
     printf("\n----------------------------------------\n\nEnd Unit Testing\n\n"); \
     if (_unity_test_failed_count > 0) { \
-        printf("\t\033[0;31mPassed %u/%u tests. %u tests failed!\033[0m\n", _unity_test_passed_count, _unity_test_count, _unity_test_failed_count); \
-        printf("\t\033[0;31mPassed %u/%u asserts. %u asserts failed!\033[0m\n", _unity_assert_passed_count, _unity_assert_count, _unity_assert_failed_count); \
+        printf("\033[0;31mPassed %u/%u tests. %u tests failed!\033[0m\n", _unity_test_passed_count, _unity_test_count, _unity_test_failed_count); \
+        printf("\033[0;31mPassed %u/%u asserts. %u asserts failed!\033[0m\n", _unity_assert_passed_count, _unity_assert_count, _unity_assert_failed_count); \
     } else { \
-        printf("\033[0;32m%u asserts passed in %u tests. Good job!\033[0m\n", _unity_assert_count, _unity_test_count); \
+        printf("\33[0;32m%u asserts passed in %u tests. Good job!\033[0m\n", _unity_assert_count, _unity_test_count); \
     }
 
 #define UNITY_HEADER(header) \
@@ -59,29 +60,71 @@
     } \
     return _unity_test_assert_failed_count;
 
-#define UNITY_ASSERT(func, message) \
+#define UNITY_ASSERT_BEGIN \
     _unity_test_assert_count++; \
     (*_unity_assert_count)++; \
-    printf("\t\t\033[0;33mASSERT %u\033[0m", _unity_test_assert_count); \
+    printf("\t\t\033[0;33mASSERT %u\033[0m", _unity_test_assert_count);
+
+#define UNITY_ASSERT_PASSED \
+    printf(": \033[0;32mPASSED\033[0m\n"); \
+    _unity_test_assert_passed_count++; \
+    (*_unity_assert_passed_count)++;
+
+#define UNITY_ASSERT_FAILED(message) \
+    printf(": \033[0;31mFAILED\033[0m\n"); \
+    printf("\t\t\t%s\n", message); \
+    _unity_test_assert_failed_count++; \
+    (*_unity_assert_failed_count)++;
+
+#define UNITY_ASSERT(func, message) \
+    UNITY_ASSERT_BEGIN \
     if (func) {\
-        printf(": \033[0;32mPASSED\033[0m\n"); \
-        _unity_test_assert_passed_count++; \
-        (*_unity_assert_passed_count)++; \
+        UNITY_ASSERT_PASSED \
     } else { \
-        printf(": \033[0;31mFAILED\033[0m\n\t"); \
-        printf(message); \
-        printf("\n"); \
-        _unity_test_assert_failed_count++; \
-        (*_unity_assert_failed_count)++; \
+        UNITY_ASSERT_FAILED(message) \
     }
 
 #define UNITY_ASSERT_EQUAL(func, target) \
-    UNITY_ASSERT(func == target, "\"" #func "\" == \"" #target "\"")
+    { \
+        char* _unity_string; \
+        asprintf(&_unity_string, "%d == %d", func, target); \
+        UNITY_ASSERT(func == target, _unity_string) \
+        free(_unity_string); \
+    }
 
 #define UNITY_ASSERT_NULLPTR(func) \
-    UNITY_ASSERT(func == nullptr, "\"" #func "\" == nullptr")
+    { \
+        char* _unity_string; \
+        asprintf(&_unity_string, "%d == nullptr", func); \
+        UNITY_ASSERT(func == nullptr, _unity_string) \
+        free(_unity_string); \
+    }
 
 #define UNITY_ASSERT_NOT_NULLPTR(func) \
-    UNITY_ASSERT(func != nullptr, "\"" #func "\" != nullptr")
+    { \
+        char* _unity_string; \
+        asprintf(&_unity_string, "%d != nullptr", func); \
+        UNITY_ASSERT(func != nullptr, _unity_string) \
+        free(_unity_string); \
+    }
+
+#define UNITY_ASSERT_STRING_ARRAY_EQUAL(func, target, length) \
+    UNITY_ASSERT_BEGIN \
+    { \
+        uint8_t _unity_flag = 0; \
+        for (unsigned int i = 0; i < length; i++) { \
+            if (func[i] != target[i]) { \
+                char* _unity_string; \
+                asprintf(&_unity_string, "\"%c\" == \"%c\"", func[i], target[i]); \
+                UNITY_ASSERT_FAILED(_unity_string) \
+                free(_unity_string); \
+                _unity_flag = 1; \
+                break; \
+            } \
+        } \
+        if (_unity_flag == 0) { \
+            UNITY_ASSERT_PASSED \
+        } \
+    }
 
 #endif
