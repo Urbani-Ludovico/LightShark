@@ -1,6 +1,8 @@
 
 #include "LSBoard.h"
 
+#include <string.h>
+
 ls_board_t ls_board_init() {
     const auto board = (ls_board_t)calloc(1, sizeof(struct _ls_board_t));
 
@@ -9,6 +11,23 @@ ls_board_t ls_board_init() {
 
 void ls_board_destroy(const ls_board_t board) {
     free(board);
+}
+
+void ls_board_print(const ls_board_t board) {
+    char* string = ls_board_to_string(board);
+
+    for (uint64_t row = 0; row < 8; row++) {
+        for (uint64_t col = 0; col < 8; col++) {
+            if (string[row * 8 + col] == '\0') {
+                printf("%c", string[row * 8 + col]);
+            } else {
+                printf(".");
+            }
+        }
+        printf("\n");
+    }
+
+    free(string);
 }
 
 void ls_board_start(const ls_board_t board) {
