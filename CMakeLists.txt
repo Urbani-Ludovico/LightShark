@@ -27,3 +27,4 @@ add_library(LightShark STATIC
 #----------------------------------------
 
 include(examples/CMakeLists.txt)
+include(tests/CMakeLists.txt)
