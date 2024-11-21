@@ -32,7 +32,13 @@ ls_tree_t ls_tree_insert_child(const ls_tree_t tree, const ls_board_t board) {
         tree->_children_array_length = _LS_TREE_CHILDREN_ARRAY_INCREMENT;
     } else if (tree->children_length == tree->_children_array_length) {
         tree->_children_array_length += _LS_TREE_CHILDREN_ARRAY_INCREMENT;
-        realloc(tree->children, sizeof(ls_tree_t) * tree->_children_array_length);
+        const auto new_children = (ls_tree_t*)realloc(tree->children, sizeof(ls_tree_t) * tree->_children_array_length);
+
+        if (new_children == nullptr) {
+            exit(1);
+        } else {
+            tree->children = new_children;
+        }
     }
 
     const auto new_tree = ls_tree_init();
