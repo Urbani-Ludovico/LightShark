@@ -36,9 +36,8 @@ ls_tree_t ls_tree_insert_child(const ls_tree_t tree, const ls_board_t board) {
 
         if (new_children == nullptr) {
             exit(1);
-        } else {
-            tree->children = new_children;
         }
+        tree->children = new_children;
     }
 
     const auto new_tree = ls_tree_init();
