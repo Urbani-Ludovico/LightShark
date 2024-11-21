@@ -4,10 +4,9 @@
 #include <stdlib.h>
 
 #include "Board.h"
+#include "Tree.h"
 
 typedef struct _ls_t* ls_t;
-
-typedef struct _ls_board_tree_t* ls_board_tree_t;
 
 ls_t ls_init();
 void ls_destroy(ls_t engine);
