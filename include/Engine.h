@@ -3,8 +3,11 @@
 
 #include <stdlib.h>
 
-struct _ls_t;
+#include "Board.h"
+
 typedef struct _ls_t* ls_t;
+
+typedef struct _ls_board_tree_t* ls_board_tree_t;
 
 ls_t ls_init();
 void ls_destroy(ls_t engine);

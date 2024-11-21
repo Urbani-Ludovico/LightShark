@@ -1,12 +1,20 @@
 
 #include "Engine.h"
 
-struct ls_t {
+struct _ls_t {
+    ls_board_t board;
+    ls_board_tree_t tree;
+};
 
+struct _ls_board_tree_t {
+    ls_board_t board;
+
+    ls_board_tree_t *children;
+    unsigned int children_length;
 };
 
 ls_t ls_init() {
-    const auto engine = (ls_t)calloc(1, sizeof(struct ls_t));
+    const auto engine = (ls_t)calloc(1, sizeof(struct _ls_t));
 
     return engine;
 }
