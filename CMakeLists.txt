@@ -9,6 +9,8 @@ add_library(LightShark STATIC
     include/LightShark.h
 
     include/Engine.h
+    include/Board.h
 
     src/Engine.c
+    src/Board.c
 )
