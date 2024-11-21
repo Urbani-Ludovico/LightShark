@@ -12,4 +12,6 @@ typedef struct _ls_board_t* ls_board_t;
 ls_board_t ls_board_init();
 void ls_board_destroy(ls_board_t board);
 
+void ls_board_start(ls_board_t board);
+
 #endif

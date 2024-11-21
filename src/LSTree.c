@@ -7,5 +7,7 @@ ls_tree_t ls_tree_init() {
     tree->board = ls_board_init();
     tree->children_length = 0;
 
+    ls_board_start(tree->board);
+
     return tree;
 }
