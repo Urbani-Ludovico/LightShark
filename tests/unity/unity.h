@@ -15,6 +15,7 @@
     unsigned int _unity_assert_count = 0; \
     unsigned int _unity_assert_passed_count = 0; \
     unsigned int _unity_assert_failed_count = 0; \
+    int result; \
     printf("Begin Unit Testing\n\n----------------------------------------\n\n");
 
 #define UNITY_END \
@@ -28,7 +29,7 @@
 
 #define UNITY_HEADER(header) \
     _unity_header_count++; \
-    if (_unity_header_count == 0 && _unity_test_count == 0) { \
+    if (_unity_header_count != 0 || _unity_test_count != 0) { \
         printf("\n"); \
     } \
     printf("\033[0;36m----------  "); \
@@ -37,10 +38,10 @@
 
 #define UNITY_TEST(func, name) \
     _unity_test_count++; \
-    printf("\033[0;35mTEST %u\033[0m: ", _unity_test_count); \
+    printf("\t\033[0;35mTEST %u\033[0m: ", _unity_test_count); \
     printf(name); \
     printf("\n"); \
-    int result = func(&_unity_assert_count, &_unity_assert_passed_count, &_unity_assert_failed_count); \
+    result = func(&_unity_assert_count, &_unity_assert_passed_count, &_unity_assert_failed_count); \
     if (result == 0) { \
         _unity_test_passed_count++; \
     } else { \
@@ -61,7 +62,7 @@
 #define UNITY_ASSERT(func, message) \
     _unity_test_assert_count++; \
     (*_unity_assert_count)++; \
-    printf("\t\033[0;33mASSERT %u\033[0m", _unity_test_assert_count); \
+    printf("\t\t\033[0;33mASSERT %u\033[0m", _unity_test_assert_count); \
     if (func) {\
         printf(": \033[0;32mPASSED\033[0m\n"); \
         _unity_test_assert_passed_count++; \
@@ -73,5 +74,14 @@
         _unity_test_assert_failed_count++; \
         (*_unity_assert_failed_count)++; \
     }
+
+#define UNITY_ASSERT_EQUAL(func, target) \
+    UNITY_ASSERT(func == target, "\"" #func "\" == \"" #target "\"")
+
+#define UNITY_ASSERT_NULLPTR(func) \
+    UNITY_ASSERT(func == nullptr, "\"" #func "\" == nullptr")
+
+#define UNITY_ASSERT_NOT_NULLPTR(func) \
+    UNITY_ASSERT(func != nullptr, "\"" #func "\" != nullptr")
 
 #endif
