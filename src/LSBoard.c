@@ -19,9 +19,9 @@ void ls_board_print(const ls_board_t board) {
     for (uint64_t row = 0; row < 8; row++) {
         for (uint64_t col = 0; col < 8; col++) {
             if (string[row * 8 + col] == '\0') {
-                printf("%c", string[row * 8 + col]);
-            } else {
                 printf(".");
+            } else {
+                printf("%c", string[row * 8 + col]);
             }
         }
         printf("\n");
