@@ -11,6 +11,4 @@ void ls_board_destroy(const ls_board_t board) {
     free(board);
 }
 
-void ls_board_start(ls_board_t board) {
-
-}
+void ls_board_start(ls_board_t board) {}

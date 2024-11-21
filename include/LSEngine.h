@@ -10,6 +10,7 @@ struct _ls_t {
     ls_board_t board;
     ls_tree_t tree;
 };
+
 typedef struct _ls_t* ls_t;
 
 ls_t ls_init();
