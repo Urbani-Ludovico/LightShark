@@ -6,7 +6,7 @@ struct _ls_board_t {
 };
 
 ls_board_t ls_board_init() {
-    const auto board = (ls_board_t)calloc(1, sizeof(ls_board_t));
+    const auto board = (ls_board_t)calloc(1, sizeof(struct _ls_board_t));
 
     return board;
 }
