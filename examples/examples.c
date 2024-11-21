@@ -9,6 +9,7 @@ int main() {
     printf("\nExample number: ");
     int example_number;
     scanf("%d", &example_number);
+    printf("\n");
 
     int result;
     switch (example_number) {
