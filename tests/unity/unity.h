@@ -103,7 +103,7 @@
 #define UNITY_ASSERT_POINTER_EQUAL(func, target) \
     { \
         char* _unity_string; \
-        asprintf(&_unity_string, "%p == %p", func, target); \
+        asprintf(&_unity_string, "%p == %p", (void*)func, (void*)target); \
         UNITY_ASSERT(func == target, _unity_string) \
         free(_unity_string); \
     }
@@ -111,7 +111,7 @@
 #define UNITY_ASSERT_NULLPTR(func) \
     { \
         char* _unity_string; \
-        asprintf(&_unity_string, "%p == nullptr", func); \
+        asprintf(&_unity_string, "%p == nullptr", (void*)func); \
         UNITY_ASSERT(func == nullptr, _unity_string) \
         free(_unity_string); \
     }
@@ -119,7 +119,7 @@
 #define UNITY_ASSERT_NOT_NULLPTR(func) \
     { \
         char* _unity_string; \
-        asprintf(&_unity_string, "%p != nullptr", func); \
+        asprintf(&_unity_string, "%p != nullptr", (void*)func); \
         UNITY_ASSERT(func != nullptr, _unity_string) \
         free(_unity_string); \
     }

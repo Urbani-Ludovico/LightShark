@@ -16,3 +16,5 @@ add_executable(LightSharkTests
 )
 
 target_link_libraries(LightSharkTests PRIVATE LightShark)
+
+target_compile_options(LightSharkTests PRIVATE ${COMPILE_OPTIONS})

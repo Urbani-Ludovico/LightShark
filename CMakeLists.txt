@@ -4,6 +4,12 @@ set(CMAKE_C_STANDARD 23)
 
 include_directories(include)
 
+if(MSVC)
+    set(COMPILE_OPTIONS /W4 /WX)
+else()
+    set(COMPILE_OPTIONS -Wall -Wextra -Wpedantic -Werror)
+endif()
+
 #----------------------------------------
 # Library
 #----------------------------------------
@@ -21,6 +27,8 @@ add_library(LightShark STATIC
     src/LSEngine.c
     src/LSTree.c
 )
+
+target_compile_options(LightShark PRIVATE ${COMPILE_OPTIONS})
 
 #----------------------------------------
 # Includes

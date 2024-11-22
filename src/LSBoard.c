@@ -43,10 +43,10 @@ void ls_board_start(const ls_board_t board) {
 }
 
 char* ls_board_to_string(const ls_board_t board) {
-    const auto string = (char*)calloc(64, sizeof(char));
+    auto const string = (char*)calloc(64, sizeof(char));
 
     for (uint8_t i = 0; i < 64; i++) {
-        const uint64_t and = 1ULL << 63 - i;
+        const uint64_t and = 1ULL << (63 - i);
 
         if (board->white_king & and) {
             string[i] = 'K';

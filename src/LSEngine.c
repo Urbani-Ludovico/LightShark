@@ -2,7 +2,7 @@
 #include "LSEngine.h"
 
 ls_t ls_init() {
-    const auto engine = (ls_t)malloc(sizeof(struct _ls_t));
+    auto const engine = (ls_t)malloc(sizeof(struct _ls_t));
 
     engine->tree = ls_tree_init();
     engine->tree->board = ls_board_init();

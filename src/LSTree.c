@@ -2,7 +2,7 @@
 #include "LSTree.h"
 
 ls_state_t ls_tree_init() {
-    const auto tree = (ls_state_t)malloc(sizeof(struct _ls_state_t));
+    auto const tree = (ls_state_t)malloc(sizeof(struct _ls_state_t));
 
     tree->board = nullptr;
 
@@ -32,7 +32,7 @@ ls_state_t ls_tree_insert_child(const ls_state_t tree, const ls_board_t board) {
         tree->_children_array_length = _LS_TREE_CHILDREN_ARRAY_INCREMENT;
     } else if (tree->children_length == tree->_children_array_length) {
         tree->_children_array_length += _LS_TREE_CHILDREN_ARRAY_INCREMENT;
-        const auto new_children = (ls_state_t*)realloc(tree->children, sizeof(ls_state_t) * tree->_children_array_length);
+        auto const new_children = (ls_state_t*)realloc(tree->children, sizeof(ls_state_t) * tree->_children_array_length);
 
         if (new_children == nullptr) {
             exit(1);
@@ -40,7 +40,7 @@ ls_state_t ls_tree_insert_child(const ls_state_t tree, const ls_board_t board) {
         tree->children = new_children;
     }
 
-    const auto new_tree = ls_tree_init();
+    auto const new_tree = ls_tree_init();
 
     tree->children[tree->children_length] = new_tree;
     tree->children[tree->children_length]->board = board;

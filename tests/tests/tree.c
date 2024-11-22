@@ -4,7 +4,7 @@
 UNITY_TEST_RETURN test_tree_insert(UNITY_TEST_PARAMETERS) {
     UNITY_TEST_BEGIN
 
-    const auto engine = ls_init();
+    auto const engine = ls_init();
 
     const ls_board_t new_board = ls_board_init();
     ls_tree_insert_child(engine->tree, new_board);
