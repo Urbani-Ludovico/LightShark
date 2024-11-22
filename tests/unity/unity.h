@@ -92,6 +92,14 @@
         free(_unity_string); \
     }
 
+#define UNITY_ASSERT_NOT_EQUAL(func, target) \
+    { \
+        char* _unity_string; \
+        asprintf(&_unity_string, "%d != %d", func, target); \
+        UNITY_ASSERT(func != target, _unity_string) \
+        free(_unity_string); \
+    }
+
 #define UNITY_ASSERT_NULLPTR(func) \
     { \
         char* _unity_string; \
