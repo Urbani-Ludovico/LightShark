@@ -9,19 +9,19 @@
 #include "LSBoard.h"
 #include <stdint.h>
 
-typedef struct _ls_tree_t* ls_tree_t;
+typedef struct _ls_state_t* ls_state_t;
 
-struct _ls_tree_t {
+struct _ls_state_t {
     ls_board_t board;
 
-    ls_tree_t* children;
+    ls_state_t* children;
     uint16_t children_length;
     uint16_t _children_array_length;
 };
 
-ls_tree_t ls_tree_init();
-void ls_tree_destroy(ls_tree_t tree);
+ls_state_t ls_tree_init();
+void ls_tree_destroy(ls_state_t tree);
 
-ls_tree_t ls_tree_insert_child(ls_tree_t tree, ls_board_t board);
+ls_state_t ls_tree_insert_child(ls_state_t tree, ls_board_t board);
 
 #endif
