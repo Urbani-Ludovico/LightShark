@@ -1,6 +1,6 @@
 
-#ifndef UNITY_H
-#define UNITY_H
+#ifndef LIGHTSHARK_TESTS_UNITY_H
+#define LIGHTSHARK_TESTS_UNITY_H
 
 #include <stdio.h>
 #include <stdint.h>

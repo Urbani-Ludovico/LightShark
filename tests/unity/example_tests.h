@@ -1,5 +1,5 @@
-#ifndef EXAMPLE_TESTS_H
-#define EXAMPLE_TESTS_H
+#ifndef LIGHTSHARK_TESTS_TEST_EXAMPLE_H
+#define LIGHTSHARK_TESTS_TEST_EXAMPLE_H
 
 #include "unity.h"
 

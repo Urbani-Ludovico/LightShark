@@ -1,6 +1,6 @@
 
-#ifndef CREATE_H
-#define CREATE_H
+#ifndef LIGHTSHARK_EXAMPLES_CREATE_H
+#define LIGHTSHARK_EXAMPLES_CREATE_H
 
 #include <LightShark.h>
 

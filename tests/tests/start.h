@@ -1,6 +1,6 @@
 
-#ifndef START_H
-#define START_H
+#ifndef LIGHTSHARK_TESTS_TEST_START_H
+#define LIGHTSHARK_TESTS_TEST_START_H
 
 #include "../unity/unity.h"
 
