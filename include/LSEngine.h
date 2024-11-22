@@ -1,5 +1,5 @@
-#ifndef ENGINE_H
-#define ENGINE_H
+#ifndef LIGHTSHARK_ENGINE_H
+#define LIGHTSHARK_ENGINE_H
 
 #include <stdlib.h>
 

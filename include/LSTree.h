@@ -1,6 +1,6 @@
 
-#ifndef TREE_H
-#define TREE_H
+#ifndef LIGHTSHARK_TREE_H
+#define LIGHTSHARK_TREE_H
 
 #define _LS_TREE_CHILDREN_ARRAY_INCREMENT 20
 

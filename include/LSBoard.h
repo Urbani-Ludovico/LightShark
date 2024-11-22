@@ -1,6 +1,6 @@
 
-#ifndef BOARD_H
-#define BOARD_H
+#ifndef LIGHTSHARK_BOARD_H
+#define LIGHTSHARK_BOARD_H
 
 #include <stdio.h>
 #include <stdlib.h>
