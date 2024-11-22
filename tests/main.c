@@ -12,6 +12,7 @@ int main(void) {
 
     UNITY_HEADER("Engine structure")
     UNITY_TEST(test_init, "Engine init")
+    UNITY_TEST(test_init_game_information, "Game information init")
     UNITY_TEST(test_board_start, "Board start")
 
     UNITY_HEADER("Tree structure")

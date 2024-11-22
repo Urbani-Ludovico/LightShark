@@ -6,12 +6,37 @@ UNITY_TEST_RETURN test_init(UNITY_TEST_PARAMETERS) {
 
     auto const engine = ls_init();
 
-    UNITY_ASSERT_NOT_NULLPTR(engine->board)
     UNITY_ASSERT_NOT_NULLPTR(engine->tree)
+    UNITY_ASSERT_NOT_NULLPTR(engine->tree->board)
+    UNITY_ASSERT_POINTER_EQUAL(engine->state, engine->tree)
+    UNITY_ASSERT_POINTER_EQUAL(engine->board, engine->tree->board)
 
     UNITY_ASSERT_NULLPTR(engine->tree->children)
     UNITY_ASSERT_EQUAL(engine->tree->children_length, 0)
     UNITY_ASSERT_EQUAL(engine->tree->_children_array_length, 0)
+
+    ls_destroy(engine);
+
+    UNITY_TEST_END
+}
+
+UNITY_TEST_RETURN test_init_game_information(UNITY_TEST_PARAMETERS) {
+    UNITY_TEST_BEGIN
+
+    auto const engine = ls_init();
+
+    UNITY_ASSERT_EQUAL(engine->turn, WHITE)
+    UNITY_ASSERT_EQUAL(engine->moves_count, 0)
+    UNITY_ASSERT_EQUAL(engine->captured_white_queen, 0)
+    UNITY_ASSERT_EQUAL(engine->captured_white_rock, 0)
+    UNITY_ASSERT_EQUAL(engine->captured_white_knight, 0)
+    UNITY_ASSERT_EQUAL(engine->captured_white_bishop, 0)
+    UNITY_ASSERT_EQUAL(engine->captured_white_pawn, 0)
+    UNITY_ASSERT_EQUAL(engine->captured_black_queen, 0)
+    UNITY_ASSERT_EQUAL(engine->captured_black_rock, 0)
+    UNITY_ASSERT_EQUAL(engine->captured_black_knight, 0)
+    UNITY_ASSERT_EQUAL(engine->captured_black_bishop, 0)
+    UNITY_ASSERT_EQUAL(engine->captured_black_pawn, 0)
 
     ls_destroy(engine);
 
