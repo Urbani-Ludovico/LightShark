@@ -21,6 +21,7 @@ struct _ls_state_t {
     _ls_state_capture_t capture;
 
     // Tree
+    ls_state_t parent;
     ls_state_t* children;
     uint16_t children_length;
     uint16_t _children_array_length;

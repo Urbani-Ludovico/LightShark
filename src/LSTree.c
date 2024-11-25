@@ -11,6 +11,7 @@ ls_state_t ls_tree_init() {
     tree->capture = 0x0;
 
     // Tree
+    tree->parent = nullptr;
     tree->children = nullptr;
     tree->children_length = 0;
     tree->_children_array_length = 0;
@@ -46,6 +47,7 @@ ls_state_t ls_tree_insert_child(const ls_state_t tree, const ls_board_t board) {
     }
 
     auto const new_tree = ls_tree_init();
+    new_tree->parent = tree;
 
     tree->children[tree->children_length] = new_tree;
     tree->children[tree->children_length]->board = board;
