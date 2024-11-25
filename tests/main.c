@@ -4,6 +4,7 @@
 
 #include "tests/start.h"
 #include "tests/tree.h"
+#include "tests/check.h"
 
 int main(void) {
     UNITY_BEGIN
@@ -18,6 +19,9 @@ int main(void) {
     UNITY_HEADER("Tree structure")
     UNITY_TEST(test_tree_insert, "Tree insert")
     UNITY_TEST(test_tree_insert_board, "Tree insert board")
+
+    UNITY_HEADER("Check")
+    UNITY_TEST(test_check_single_white, "White check with single piece")
 
     UNITY_END
     return 0;

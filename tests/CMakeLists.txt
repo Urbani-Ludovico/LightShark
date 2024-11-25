@@ -10,9 +10,11 @@ add_executable(LightSharkTests
 
     tests/tests/start.h
     tests/tests/tree.h
+    tests/tests/check.h
 
     tests/tests/start.c
     tests/tests/tree.c
+    tests/tests/check.c
 )
 
 target_link_libraries(LightSharkTests PRIVATE LightShark)
