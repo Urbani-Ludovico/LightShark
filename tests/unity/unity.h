@@ -143,4 +143,9 @@
         } \
     }
 
+#define UNITY_ASSERT_TRUE(func) \
+    { \
+        UNITY_ASSERT(func == true, "true") \
+    }
+
 #endif
