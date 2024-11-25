@@ -4,8 +4,13 @@
 ls_state_t ls_tree_init() {
     auto const tree = (ls_state_t)malloc(sizeof(struct _ls_state_t));
 
+    // Board
     tree->board = nullptr;
 
+    // Board status
+    tree->capture = 0x0;
+
+    // Tree
     tree->children = nullptr;
     tree->children_length = 0;
     tree->_children_array_length = 0;

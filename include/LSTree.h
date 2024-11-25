@@ -11,9 +11,16 @@
 
 typedef struct _ls_state_t* ls_state_t;
 
+typedef uint8_t _ls_state_capture_t; // 0 0 0 Queen Bishop Knight Rock Pawn
+
 struct _ls_state_t {
+    // Board
     ls_board_t board;
 
+    // Board status
+    _ls_state_capture_t capture;
+
+    // Tree
     ls_state_t* children;
     uint16_t children_length;
     uint16_t _children_array_length;
