@@ -22,6 +22,7 @@ int main(void) {
 
     UNITY_HEADER("Check")
     UNITY_TEST(test_check_single_white, "White check with single piece")
+    UNITY_TEST(test_check_single_black, "Black check with single piece")
 
     UNITY_END
     return 0;
