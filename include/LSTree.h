@@ -5,20 +5,30 @@
 #define _LS_TREE_CHILDREN_ARRAY_INCREMENT 20
 
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "LSBoard.h"
-#include <stdint.h>
 
 typedef struct _ls_state_t* ls_state_t;
 
-typedef uint8_t _ls_state_capture_t; // 0 0 0 Queen Bishop Knight Rock Pawn
+enum _ls_check_t {
+    CHECK_WHITE,
+    CHECK_BLACK,
+    NO_CHECK,
+    UNDEFINED_CHECK
+};
+
+typedef enum _ls_check_t ls_check_t;
+
+typedef uint8_t ls_state_capture_t; // 0 0 0 Queen Bishop Knight Rock Pawn
 
 struct _ls_state_t {
     // Board
     ls_board_t board;
 
     // Board status
-    _ls_state_capture_t capture;
+    ls_check_t is_check;
+    ls_state_capture_t capture;
 
     // Tree
     ls_state_t parent;
