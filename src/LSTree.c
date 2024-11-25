@@ -32,7 +32,7 @@ void ls_tree_destroy(const ls_state_t tree) {
     free(tree);
 }
 
-ls_state_t ls_tree_insert_child(const ls_state_t tree, const ls_board_t board) {
+void ls_tree_insert_child(const ls_state_t tree, const ls_state_t child) {
     if (tree->_children_array_length == 0) {
         tree->children = (ls_state_t*)malloc(sizeof(ls_state_t) * _LS_TREE_CHILDREN_ARRAY_INCREMENT);
         tree->_children_array_length = _LS_TREE_CHILDREN_ARRAY_INCREMENT;
@@ -46,13 +46,16 @@ ls_state_t ls_tree_insert_child(const ls_state_t tree, const ls_board_t board) {
         tree->children = new_children;
     }
 
-    auto const new_tree = ls_tree_init();
-    new_tree->parent = tree;
-
-    tree->children[tree->children_length] = new_tree;
-    tree->children[tree->children_length]->board = board;
-
+    tree->children[tree->children_length] = child;
+    child->parent = tree;
     tree->children_length++;
+}
+
+ls_state_t ls_tree_insert_board_child(const ls_state_t tree, const ls_board_t board) {
+    auto const new_tree = ls_tree_init();
+    new_tree->board = board;
+
+    ls_tree_insert_child(tree, new_tree);
 
     return new_tree;
 }

@@ -17,6 +17,7 @@ int main(void) {
 
     UNITY_HEADER("Tree structure")
     UNITY_TEST(test_tree_insert, "Tree insert")
+    UNITY_TEST(test_tree_insert_board, "Tree insert board")
 
     UNITY_END
     return 0;
