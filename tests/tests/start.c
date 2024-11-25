@@ -11,6 +11,7 @@ UNITY_TEST_RETURN test_init(UNITY_TEST_PARAMETERS) {
     UNITY_ASSERT_POINTER_EQUAL(engine->state, engine->tree)
     UNITY_ASSERT_POINTER_EQUAL(engine->board, engine->tree->board)
 
+    UNITY_ASSERT_EQUAL(engine->tree->capture, 0x0)
     UNITY_ASSERT_NULLPTR(engine->tree->children)
     UNITY_ASSERT_EQUAL(engine->tree->children_length, 0)
     UNITY_ASSERT_EQUAL(engine->tree->_children_array_length, 0)
