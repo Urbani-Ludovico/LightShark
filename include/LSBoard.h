@@ -33,6 +33,4 @@ void ls_board_print(ls_board_t board);
 void ls_board_start(ls_board_t board);
 char* ls_board_to_string(ls_board_t board);
 
-bool ls_board_is_check(ls_board_t board);
-
 #endif
