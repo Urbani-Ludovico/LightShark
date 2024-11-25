@@ -13,13 +13,14 @@ enum _ls_player_t {
 typedef enum _ls_player_t ls_player_t;
 
 struct _ls_t {
+    // Board and tree
     ls_board_t board;
     ls_state_t state;
     ls_state_t tree;
 
+    // Game status
     ls_player_t turn;
     uint16_t moves_count;
-
     uint8_t captured_white_queen;
     uint8_t captured_white_rock;
     uint8_t captured_white_knight;
