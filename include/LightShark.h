@@ -4,5 +4,6 @@
 #include "LSBoard.h"
 #include "LSEngine.h"
 #include "LSTree.h"
+#include "LSBoardStatus.h"
 
 #endif

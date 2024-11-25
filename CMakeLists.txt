@@ -22,10 +22,12 @@ add_library(LightShark STATIC
     include/LSBoard.h
     include/LSEngine.h
     include/LSTree.h
+    include/LSBoardStatus.h
 
     src/LSBoard.c
     src/LSEngine.c
     src/LSTree.c
+    src/LSBoardStatus.c
 )
 
 target_compile_options(LightShark PRIVATE ${COMPILE_OPTIONS})
