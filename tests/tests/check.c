@@ -134,7 +134,7 @@ UNITY_TEST_RETURN test_not_check_obstacle(UNITY_TEST_PARAMETERS) {
         2, -24
     };
     constexpr int8_t obstacles[] = {
-        1, -9,
+        1, -18,
         9, 9,
         1, -8
     };
