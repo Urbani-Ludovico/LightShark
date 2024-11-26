@@ -9,6 +9,7 @@ ls_state_t ls_tree_init() {
 
     // Board status
     tree->capture = 0x0;
+    tree->is_check = UNDEFINED_CHECK;
 
     // Tree
     tree->parent = nullptr;
