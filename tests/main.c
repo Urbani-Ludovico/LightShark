@@ -23,6 +23,9 @@ int main(void) {
     UNITY_HEADER("Check")
     UNITY_TEST(test_check_single_white, "White check with single piece")
     UNITY_TEST(test_check_single_black, "Black check with single piece")
+    UNITY_TEST(test_not_check_single_white, "White not check with single piece")
+    UNITY_TEST(test_not_check_single_black, "Black not check with single piece")
+    UNITY_TEST(test_not_check_obstacle, "Not check for obstacle")
 
     UNITY_END
     return 0;
