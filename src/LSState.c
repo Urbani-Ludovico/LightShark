@@ -28,21 +28,6 @@ ls_check_t ls_state_is_check(ls_state_t const state) {
     return state->is_check;
 }
 
-constexpr int8_t ls_rook_directions[] = {8, -1, -8, 1};
-constexpr ls_board_state_t ls_rook_masks[] = {
-    0x00FFFFFFFFFFFFFF, // Up
-    0xFEFEFEFEFEFEFEFE, // Left
-    0xFFFFFFFFFFFFFF00, // Down
-    0x7F7F7F7F7F7F7F7F, // Right
-};
-constexpr int8_t ls_bishop_directions[] = {7, -9, -7, 9};
-constexpr ls_board_state_t ls_bishop_masks[] = {
-    0x00FEFEFEFEFEFEFE, // Up-Right
-    0xFEFEFEFEFEFEFE00, // Down-Left
-    0x7F7F7F7F7F7F7F00, // Down-Right
-    0x007F7F7F7F7F7F7F // Up-Left
-};
-
 bool ls_state_is_board_check(ls_board_t const board, ls_player_t const player) {
     ls_board_state_t const king = player == LS_PLAYER_WHITE ? board->black_king : board->white_king;
     ls_board_state_t const queen = player == LS_PLAYER_WHITE ? board->white_queen : board->black_queen;
@@ -54,19 +39,23 @@ bool ls_state_is_board_check(ls_board_t const board, ls_player_t const player) {
     ls_board_state_t const occupied_mask = ~ls_board_occupied_mask(board);
 
     // Queen
-    LS_STATE_IS_BOARD_CHECK_ATTACK(queen, ls_rook_masks, ls_rook_directions, 4)
-    LS_STATE_IS_BOARD_CHECK_ATTACK(queen, ls_bishop_masks, ls_bishop_directions, 4)
+    LS_STATE_IS_BOARD_CHECK_ATTACK(queen, _ls_queen_moves_from_masks, _ls_queen_moves_directions, _ls_queen_moves)
 
     // Bishop
-    LS_STATE_IS_BOARD_CHECK_ATTACK(bishop, ls_bishop_masks, ls_bishop_directions, 4)
+    LS_STATE_IS_BOARD_CHECK_ATTACK(bishop, _ls_bishop_moves_from_masks, _ls_bishop_moves_directions, _ls_bishop_moves)
 
     // Knight
+    for (uint8_t i = 0; i < _ls_knight_moves; i++) {
+        ls_board_state_t current_state = knight & _ls_knight_moves_from_masks[i];
+        current_state = _ls_knight_moves_directions[i] > 0 ? current_state << _ls_knight_moves_directions[i] : current_state >> -_ls_knight_moves_directions[i];
+        if (current_state & king) return true;
+    }
     if ((((knight & 0x0000FEFEFEFEFEFE) << 15) | ((knight & 0x00FCFCFCFCFCFCFC) << 6) | ((knight & 0xFCFCFCFCFCFCFC00) >> 10) | ((knight & 0xFEFEFEFEFEFE0000) >> 17) | ((knight & 0x7F7F7F7F7F7F0000) >> 15) | ((knight & 0x3F3F3F3F3F3F3F00) >> 6) | ((knight & 0x003F3F3F3F3F3F3F) << 10) | ((knight & 0x00007F7F7F7F7F7F) << 17)) & king) {
         return true;
     }
 
     // Rook
-    LS_STATE_IS_BOARD_CHECK_ATTACK(rook, ls_rook_masks, ls_rook_directions, 4)
+    LS_STATE_IS_BOARD_CHECK_ATTACK(rook, _ls_rock_moves_from_masks, _ls_rock_moves_directions, _ls_rock_moves)
 
     // Pawn
     if ((player == LS_PLAYER_WHITE && ((((pawn & 0x007F7F7F7F7F7F7F) << 9) | ((pawn & 0x00FEFEFEFEFEFEFE) << 7)) & king)) || (player == LS_PLAYER_BLACK && ((((pawn & 0xFEFEFEFEFEFEFE00) >> 9) | ((pawn & 0x7F7F7F7F7F7F7F00) >> 7)) & king))) {
