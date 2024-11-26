@@ -1,16 +1,18 @@
 
 #include "check.h"
 
+#define TEST_CHECK_KING_POSITION 0x0000001000000000
+
 #define TEST_CHECK_FOR_TRUE(piece, state, length, player) \
     for (int i = 0; i < length; i++) { \
-        *piece[i] = state[i] > 0 ? 0x0000001000000000 << state[i] : 0x0000001000000000 >> -state[i];\
+        *piece[i] = state[i] > 0 ? TEST_CHECK_KING_POSITION << state[i] : TEST_CHECK_KING_POSITION >> -state[i];\
         UNITY_ASSERT_TRUE(ls_state_is_board_check(board, player)); \
         *piece[i] = 0x0; \
     }
 
 #define TEST_CHECK_FOR_FALSE(piece, state, length, player) \
     for (int i = 0; i < length; i++) { \
-        *piece[i] = state[i] > 0 ? 0x0000001000000000 << state[i] : 0x0000001000000000 >> -state[i];\
+        *piece[i] = state[i] > 0 ? TEST_CHECK_KING_POSITION << state[i] : TEST_CHECK_KING_POSITION >> -state[i];\
         UNITY_ASSERT_FALSE(ls_state_is_board_check(board, player)); \
         *piece[i] = 0x0; \
     }
@@ -19,7 +21,7 @@ UNITY_TEST_RETURN test_check_single_white(UNITY_TEST_PARAMETERS) {
     UNITY_TEST_BEGIN
 
     auto const board = ls_board_init();
-    board->black_king = 0x0000001000000000;
+    board->black_king = TEST_CHECK_KING_POSITION;
 
     ls_board_state_t* const piece[] = {
         &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen,
@@ -44,7 +46,7 @@ UNITY_TEST_RETURN test_check_single_black(UNITY_TEST_PARAMETERS) {
     UNITY_TEST_BEGIN
 
     auto const board = ls_board_init();
-    board->white_king = 0x0000001000000000;
+    board->white_king = TEST_CHECK_KING_POSITION;
 
     ls_board_state_t* const piece[] = {
         &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen,
@@ -69,7 +71,7 @@ UNITY_TEST_RETURN test_not_check_single_white(UNITY_TEST_PARAMETERS) {
     UNITY_TEST_BEGIN
 
     auto const board = ls_board_init();
-    board->black_king = 0x0000001000000000;
+    board->black_king = TEST_CHECK_KING_POSITION;
 
     ls_board_state_t* const piece[] = {
         &board->white_queen, &board->white_queen, &board->white_queen, &board->white_queen,
@@ -94,7 +96,7 @@ UNITY_TEST_RETURN test_not_check_single_black(UNITY_TEST_PARAMETERS) {
     UNITY_TEST_BEGIN
 
     auto const board = ls_board_init();
-    board->white_king = 0x0000001000000000;
+    board->white_king = TEST_CHECK_KING_POSITION;
 
     ls_board_state_t* const piece[] = {
         &board->black_queen, &board->black_queen, &board->black_queen, &board->black_queen,
@@ -119,7 +121,7 @@ UNITY_TEST_RETURN test_not_check_obstacle(UNITY_TEST_PARAMETERS) {
     UNITY_TEST_BEGIN
 
     auto const board = ls_board_init();
-    board->black_king = 0x0000001000000000;
+    board->black_king = TEST_CHECK_KING_POSITION;
 
     ls_board_state_t* const piece[] = {
         &board->white_queen, &board->white_queen,
@@ -137,8 +139,8 @@ UNITY_TEST_RETURN test_not_check_obstacle(UNITY_TEST_PARAMETERS) {
         1, -8
     };
     for (int i = 0; i < 6; i++) {
-        *piece[i] = state[i] > 0 ? 0x0000001000000000 << state[i] : 0x0000001000000000 >> -state[i];
-        board->white_pawn = obstacles[i] > 0 ? 0x0000001000000000 << obstacles[i] : 0x0000001000000000 >> -obstacles[i];
+        *piece[i] = state[i] > 0 ? TEST_CHECK_KING_POSITION << state[i] : TEST_CHECK_KING_POSITION >> -state[i];
+        board->white_pawn = obstacles[i] > 0 ? TEST_CHECK_KING_POSITION << obstacles[i] : TEST_CHECK_KING_POSITION >> -obstacles[i];
         UNITY_ASSERT_FALSE(ls_state_is_board_check(board, WHITE));
         *piece[i] = 0x0;
         board->white_pawn = 0x0;
