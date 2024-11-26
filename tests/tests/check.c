@@ -39,6 +39,8 @@ UNITY_TEST_RETURN test_check_single_white(UNITY_TEST_PARAMETERS) {
     };
     TEST_CHECK_FOR_TRUE(piece, state, 42, WHITE)
 
+    ls_board_destroy(board);
+
     UNITY_TEST_END
 }
 
@@ -63,6 +65,8 @@ UNITY_TEST_RETURN test_check_single_black(UNITY_TEST_PARAMETERS) {
         7, 9
     };
     TEST_CHECK_FOR_TRUE(piece, state, 42, BLACK)
+
+    ls_board_destroy(board);
 
     UNITY_TEST_END
 }
@@ -89,6 +93,8 @@ UNITY_TEST_RETURN test_not_check_single_white(UNITY_TEST_PARAMETERS) {
     };
     TEST_CHECK_FOR_FALSE(piece, state, 20, WHITE)
 
+    ls_board_destroy(board);
+
     UNITY_TEST_END
 }
 
@@ -113,6 +119,8 @@ UNITY_TEST_RETURN test_not_check_single_black(UNITY_TEST_PARAMETERS) {
         -7, -9, 8, 18
     };
     TEST_CHECK_FOR_FALSE(piece, state, 20, BLACK)
+
+    ls_board_destroy(board);
 
     UNITY_TEST_END
 }
@@ -145,6 +153,8 @@ UNITY_TEST_RETURN test_not_check_obstacle(UNITY_TEST_PARAMETERS) {
         *piece[i] = 0x0;
         board->white_pawn = 0x0;
     }
+
+    ls_board_destroy(board);
 
     UNITY_TEST_END
 }
