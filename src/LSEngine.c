@@ -14,7 +14,7 @@ ls_t ls_init() {
     ls_board_start(engine->board);
 
     // Game status
-    engine->turn = WHITE;
+    engine->turn = LS_PLAYER_WHITE;
     engine->moves_count = 0;
     engine->captured_white_queen = 0;
     engine->captured_white_rock = 0;

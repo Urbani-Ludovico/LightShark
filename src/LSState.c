@@ -15,13 +15,13 @@
 }
 
 ls_check_t ls_state_is_check(ls_state_t const state) {
-    if (state->is_check == UNDEFINED_CHECK) {
-        if (ls_state_is_board_check(state->board, WHITE) == true) {
-            state->is_check = CHECK_WHITE;
-        } else if (ls_state_is_board_check(state->board, BLACK) == true) {
-            state->is_check = CHECK_BLACK;
+    if (state->is_check == LS_UNDEFINED_CHECK) {
+        if (ls_state_is_board_check(state->board, LS_PLAYER_WHITE) == true) {
+            state->is_check = LS_CHECK_WHITE;
+        } else if (ls_state_is_board_check(state->board, LS_PLAYER_BLACK) == true) {
+            state->is_check = LS_CHECK_BLACK;
         } else {
-            state->is_check = NO_CHECK;
+            state->is_check = LS_NO_CHECK;
         }
     }
 
@@ -44,12 +44,12 @@ constexpr ls_board_state_t ls_bishop_masks[] = {
 };
 
 bool ls_state_is_board_check(ls_board_t const board, ls_player_t const player) {
-    ls_board_state_t const king = player == WHITE ? board->black_king : board->white_king;
-    ls_board_state_t const queen = player == WHITE ? board->white_queen : board->black_queen;
-    ls_board_state_t const bishop = player == WHITE ? board->white_bishop : board->black_bishop;
-    ls_board_state_t const knight = player == WHITE ? board->white_knight : board->black_knight;
-    ls_board_state_t const rook = player == WHITE ? board->white_rock : board->black_rock;
-    ls_board_state_t const pawn = player == WHITE ? board->white_pawn : board->black_pawn;
+    ls_board_state_t const king = player == LS_PLAYER_WHITE ? board->black_king : board->white_king;
+    ls_board_state_t const queen = player == LS_PLAYER_WHITE ? board->white_queen : board->black_queen;
+    ls_board_state_t const bishop = player == LS_PLAYER_WHITE ? board->white_bishop : board->black_bishop;
+    ls_board_state_t const knight = player == LS_PLAYER_WHITE ? board->white_knight : board->black_knight;
+    ls_board_state_t const rook = player == LS_PLAYER_WHITE ? board->white_rock : board->black_rock;
+    ls_board_state_t const pawn = player == LS_PLAYER_WHITE ? board->white_pawn : board->black_pawn;
 
     ls_board_state_t const occupied_mask = ~ls_board_occupied_mask(board);
 
@@ -69,7 +69,7 @@ bool ls_state_is_board_check(ls_board_t const board, ls_player_t const player) {
     LS_STATE_IS_BOARD_CHECK_ATTACK(rook, ls_rook_masks, ls_rook_directions, 4)
 
     // Pawn
-    if ((player == WHITE && ((((pawn & 0x007F7F7F7F7F7F7F) << 9) | ((pawn & 0x00FEFEFEFEFEFEFE) << 7)) & king)) || (player == BLACK && ((((pawn & 0xFEFEFEFEFEFEFE00) >> 9) | ((pawn & 0x7F7F7F7F7F7F7F00) >> 7)) & king))) {
+    if ((player == LS_PLAYER_WHITE && ((((pawn & 0x007F7F7F7F7F7F7F) << 9) | ((pawn & 0x00FEFEFEFEFEFEFE) << 7)) & king)) || (player == LS_PLAYER_BLACK && ((((pawn & 0xFEFEFEFEFEFEFE00) >> 9) | ((pawn & 0x7F7F7F7F7F7F7F00) >> 7)) & king))) {
         return true;
     }
 

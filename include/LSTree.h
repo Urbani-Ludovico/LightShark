@@ -12,10 +12,10 @@
 typedef struct _ls_state_t* ls_state_t;
 
 enum _ls_check_t {
-    CHECK_WHITE,
-    CHECK_BLACK,
-    NO_CHECK,
-    UNDEFINED_CHECK
+    LS_CHECK_WHITE,
+    LS_CHECK_BLACK,
+    LS_NO_CHECK,
+    LS_UNDEFINED_CHECK
 };
 
 typedef enum _ls_check_t ls_check_t;

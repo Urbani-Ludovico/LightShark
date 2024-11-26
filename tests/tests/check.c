@@ -37,7 +37,7 @@ UNITY_TEST_RETURN test_check_single_white(UNITY_TEST_PARAMETERS) {
         8, -1, -8, 1, 16, -2, -16, 2,
         -7, -9
     };
-    TEST_CHECK_FOR_TRUE(piece, state, 42, WHITE)
+    TEST_CHECK_FOR_TRUE(piece, state, 42, LS_PLAYER_WHITE)
 
     ls_board_destroy(board);
 
@@ -64,7 +64,7 @@ UNITY_TEST_RETURN test_check_single_black(UNITY_TEST_PARAMETERS) {
         8, -1, -8, 1, 16, -2, -16, 2,
         7, 9
     };
-    TEST_CHECK_FOR_TRUE(piece, state, 42, BLACK)
+    TEST_CHECK_FOR_TRUE(piece, state, 42, LS_PLAYER_BLACK)
 
     ls_board_destroy(board);
 
@@ -91,7 +91,7 @@ UNITY_TEST_RETURN test_not_check_single_white(UNITY_TEST_PARAMETERS) {
         9, 23, -7, -18,
         7, 9, -8, -18
     };
-    TEST_CHECK_FOR_FALSE(piece, state, 20, WHITE)
+    TEST_CHECK_FOR_FALSE(piece, state, 20, LS_PLAYER_WHITE)
 
     ls_board_destroy(board);
 
@@ -118,7 +118,7 @@ UNITY_TEST_RETURN test_not_check_single_black(UNITY_TEST_PARAMETERS) {
         9, 23, -7, -18,
         -7, -9, 8, 18
     };
-    TEST_CHECK_FOR_FALSE(piece, state, 20, BLACK)
+    TEST_CHECK_FOR_FALSE(piece, state, 20, LS_PLAYER_BLACK)
 
     ls_board_destroy(board);
 
@@ -149,7 +149,7 @@ UNITY_TEST_RETURN test_not_check_obstacle(UNITY_TEST_PARAMETERS) {
     for (int i = 0; i < 6; i++) {
         *piece[i] = state[i] > 0 ? TEST_CHECK_KING_POSITION << state[i] : TEST_CHECK_KING_POSITION >> -state[i];
         board->white_pawn = obstacles[i] > 0 ? TEST_CHECK_KING_POSITION << obstacles[i] : TEST_CHECK_KING_POSITION >> -obstacles[i];
-        UNITY_ASSERT_FALSE(ls_state_is_board_check(board, WHITE));
+        UNITY_ASSERT_FALSE(ls_state_is_board_check(board, LS_PLAYER_WHITE));
         *piece[i] = 0x0;
         board->white_pawn = 0x0;
     }

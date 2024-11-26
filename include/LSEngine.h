@@ -7,7 +7,7 @@
 #include "LSTree.h"
 
 enum _ls_player_t {
-    WHITE, BLACK
+    LS_PLAYER_WHITE, LS_PLAYER_BLACK
 };
 
 typedef enum _ls_player_t ls_player_t;

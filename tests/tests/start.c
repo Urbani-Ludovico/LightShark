@@ -26,7 +26,7 @@ UNITY_TEST_RETURN test_init_game_information(UNITY_TEST_PARAMETERS) {
 
     auto const engine = ls_init();
 
-    UNITY_ASSERT_EQUAL(engine->turn, WHITE)
+    UNITY_ASSERT_EQUAL(engine->turn, LS_PLAYER_WHITE)
     UNITY_ASSERT_EQUAL(engine->moves_count, 0)
     UNITY_ASSERT_EQUAL(engine->captured_white_queen, 0)
     UNITY_ASSERT_EQUAL(engine->captured_white_rock, 0)
