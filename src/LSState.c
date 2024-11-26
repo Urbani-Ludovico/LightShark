@@ -50,9 +50,6 @@ bool ls_state_is_board_check(ls_board_t const board, ls_player_t const player) {
         current_state = _ls_knight_moves_directions[i] > 0 ? current_state << _ls_knight_moves_directions[i] : current_state >> -_ls_knight_moves_directions[i];
         if (current_state & king) return true;
     }
-    if ((((knight & 0x0000FEFEFEFEFEFE) << 15) | ((knight & 0x00FCFCFCFCFCFCFC) << 6) | ((knight & 0xFCFCFCFCFCFCFC00) >> 10) | ((knight & 0xFEFEFEFEFEFE0000) >> 17) | ((knight & 0x7F7F7F7F7F7F0000) >> 15) | ((knight & 0x3F3F3F3F3F3F3F00) >> 6) | ((knight & 0x003F3F3F3F3F3F3F) << 10) | ((knight & 0x00007F7F7F7F7F7F) << 17)) & king) {
-        return true;
-    }
 
     // Rook
     LS_STATE_IS_BOARD_CHECK_ATTACK(rook, _ls_rock_moves_from_masks, _ls_rock_moves_directions, _ls_rock_moves)
