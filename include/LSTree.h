@@ -9,7 +9,13 @@
 
 #include "LSBoard.h"
 
-typedef struct _ls_state_t* ls_state_t;
+enum _ls_player_t {
+    LS_PLAYER_WHITE,
+    LS_PLAYER_BLACK,
+    LS_UNDEFINED_PLAYER
+};
+
+typedef enum _ls_player_t ls_player_t;
 
 enum _ls_check_t {
     LS_CHECK_WHITE,
@@ -22,6 +28,8 @@ typedef enum _ls_check_t ls_check_t;
 
 typedef uint8_t ls_state_capture_t; // 0 0 0 Queen Bishop Knight Rock Pawn
 
+typedef struct _ls_state_t* ls_state_t;
+
 struct _ls_state_t {
     // Board
     ls_board_t board;
@@ -29,12 +37,14 @@ struct _ls_state_t {
     // Board status
     ls_check_t is_check;
     ls_state_capture_t capture;
+    ls_player_t turn;
 
     // Tree
     ls_state_t parent;
     ls_state_t* moves;
     uint16_t moves_length;
     uint16_t _moves_array_length;
+    ls_state_t next_move;
 };
 
 ls_state_t ls_tree_init();

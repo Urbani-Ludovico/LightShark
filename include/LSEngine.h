@@ -6,12 +6,6 @@
 #include "LSBoard.h"
 #include "LSTree.h"
 
-enum _ls_player_t {
-    LS_PLAYER_WHITE, LS_PLAYER_BLACK
-};
-
-typedef enum _ls_player_t ls_player_t;
-
 struct _ls_t {
     // Board and tree
     ls_board_t board;

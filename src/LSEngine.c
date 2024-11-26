@@ -11,6 +11,7 @@ ls_t ls_init() {
     // Start first board
     engine->tree->board = ls_board_init();
     engine->board = engine->tree->board;
+    engine->state->turn = LS_PLAYER_WHITE;
     ls_board_start(engine->board);
 
     // Game status
