@@ -66,5 +66,13 @@ bool ls_state_is_board_check(ls_board_t const board, ls_player_t const player) {
 }
 
 ls_board_state_t ls_board_occupied_mask(ls_board_t const board) {
-    return board->white_king | board->black_king | board->white_queen | board->black_queen | board->white_bishop | board->black_bishop | board->white_knight | board->black_knight | board->white_rock | board->black_rock | board->white_pawn | board->black_pawn;
+    return ls_board_occupied_mask_white(board) & ls_board_occupied_mask_black(board);
+}
+
+ls_board_state_t ls_board_occupied_mask_white(ls_board_t const board) {
+    return board->white_king | board->white_queen | board->white_bishop | board->white_knight | board->white_rock | board->white_pawn;
+}
+
+ls_board_state_t ls_board_occupied_mask_black(ls_board_t const board) {
+    return board->black_king | board->black_queen | board->black_bishop | board->black_knight | board->black_rock | board->black_pawn;
 }
