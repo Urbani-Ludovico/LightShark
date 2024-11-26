@@ -145,7 +145,12 @@
 
 #define UNITY_ASSERT_TRUE(func) \
     { \
-        UNITY_ASSERT(func == true, "true") \
+        UNITY_ASSERT(func == true, "boolean TRUE expected") \
+    }
+
+#define UNITY_ASSERT_FALSE(func) \
+    { \
+        UNITY_ASSERT(func == false, "boolean FALSE exprected") \
     }
 
 #endif
