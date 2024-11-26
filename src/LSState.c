@@ -28,6 +28,21 @@ ls_check_t ls_state_is_check(ls_state_t const state) {
     return state->is_check;
 }
 
+constexpr int8_t ls_rook_directions[] = {8, -1, -8, 1};
+constexpr ls_board_state_t ls_rook_masks[] = {
+    0x00FFFFFFFFFFFFFF, // Up
+    0xFEFEFEFEFEFEFEFE, // Left
+    0xFFFFFFFFFFFFFF00, // Down
+    0x7F7F7F7F7F7F7F7F, // Right
+};
+constexpr int8_t ls_bishop_directions[] = {7, -9, -7, 9};
+constexpr ls_board_state_t ls_bishop_masks[] = {
+    0x00FEFEFEFEFEFEFE, // Up-Right
+    0xFEFEFEFEFEFEFE00, // Down-Left
+    0x7F7F7F7F7F7F7F00, // Down-Right
+    0x007F7F7F7F7F7F7F // Up-Left
+};
+
 bool ls_state_is_board_check(ls_board_t const board, ls_player_t const player) {
     ls_board_state_t const king = player == WHITE ? board->black_king : board->white_king;
     ls_board_state_t const queen = player == WHITE ? board->white_queen : board->black_queen;
@@ -38,27 +53,12 @@ bool ls_state_is_board_check(ls_board_t const board, ls_player_t const player) {
 
     ls_board_state_t const occupied_mask = ~ls_board_occupied_mask(board);
 
-    constexpr int8_t rook_directions[] = {8, -1, -8, 1};
-    constexpr ls_board_state_t rook_masks[] = {
-        0x00FFFFFFFFFFFFFF, // Up
-        0xFEFEFEFEFEFEFEFE, // Left
-        0xFFFFFFFFFFFFFF00, // Down
-        0x7F7F7F7F7F7F7F7F, // Right
-    };
-    constexpr int8_t bishop_directions[] = {7, -9, -7, 9};
-    constexpr ls_board_state_t bishop_masks[] = {
-        0x00FEFEFEFEFEFEFE, // Up-Right
-        0xFEFEFEFEFEFEFE00, // Down-Left
-        0x7F7F7F7F7F7F7F00, // Down-Right
-        0x007F7F7F7F7F7F7F // Up-Left
-    };
-
     // Queen
-    LS_STATE_IS_BOARD_CHECK_ATTACK(queen, rook_masks, rook_directions, 4)
-    LS_STATE_IS_BOARD_CHECK_ATTACK(queen, bishop_masks, bishop_directions, 4)
+    LS_STATE_IS_BOARD_CHECK_ATTACK(queen, ls_rook_masks, ls_rook_directions, 4)
+    LS_STATE_IS_BOARD_CHECK_ATTACK(queen, ls_bishop_masks, ls_bishop_directions, 4)
 
     // Bishop
-    LS_STATE_IS_BOARD_CHECK_ATTACK(bishop, bishop_masks, bishop_directions, 4)
+    LS_STATE_IS_BOARD_CHECK_ATTACK(bishop, ls_bishop_masks, ls_bishop_directions, 4)
 
     // Knight
     if ((((knight & 0x0000FEFEFEFEFEFE) << 15) | ((knight & 0x00FCFCFCFCFCFCFC) << 6) | ((knight & 0xFCFCFCFCFCFCFC00) >> 10) | ((knight & 0xFEFEFEFEFEFE0000) >> 17) | ((knight & 0x7F7F7F7F7F7F0000) >> 15) | ((knight & 0x3F3F3F3F3F3F3F00) >> 6) | ((knight & 0x003F3F3F3F3F3F3F) << 10) | ((knight & 0x00007F7F7F7F7F7F) << 17)) & king) {
@@ -66,7 +66,7 @@ bool ls_state_is_board_check(ls_board_t const board, ls_player_t const player) {
     }
 
     // Rook
-    LS_STATE_IS_BOARD_CHECK_ATTACK(rook, rook_masks, rook_directions, 4)
+    LS_STATE_IS_BOARD_CHECK_ATTACK(rook, ls_rook_masks, ls_rook_directions, 4)
 
     // Pawn
     if ((player == WHITE && ((((pawn & 0x007F7F7F7F7F7F7F) << 9) | ((pawn & 0x00FEFEFEFEFEFEFE) << 7)) & king)) || (player == BLACK && ((((pawn & 0xFEFEFEFEFEFEFE00) >> 9) | ((pawn & 0x7F7F7F7F7F7F7F00) >> 7)) & king))) {
