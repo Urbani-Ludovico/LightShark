@@ -17,8 +17,8 @@ int main(void) {
     UNITY_TEST(test_board_start, "Board start")
 
     UNITY_HEADER("Tree structure")
-    UNITY_TEST(test_tree_insert, "Tree insert")
-    UNITY_TEST(test_tree_insert_board, "Tree insert board")
+    UNITY_TEST(test_tree_insert, "Tree insert move")
+    UNITY_TEST(test_tree_insert_board, "Tree insert move board")
 
     UNITY_HEADER("Check")
     UNITY_TEST(test_check_single_white, "White check with single piece")

@@ -12,9 +12,9 @@ UNITY_TEST_RETURN test_init(UNITY_TEST_PARAMETERS) {
     UNITY_ASSERT_POINTER_EQUAL(engine->board, engine->tree->board)
 
     UNITY_ASSERT_EQUAL(engine->tree->capture, 0x0)
-    UNITY_ASSERT_NULLPTR(engine->tree->children)
-    UNITY_ASSERT_EQUAL(engine->tree->children_length, 0)
-    UNITY_ASSERT_EQUAL(engine->tree->_children_array_length, 0)
+    UNITY_ASSERT_NULLPTR(engine->tree->moves)
+    UNITY_ASSERT_EQUAL(engine->tree->moves_length, 0)
+    UNITY_ASSERT_EQUAL(engine->tree->_moves_array_length, 0)
 
     ls_destroy(engine);
 
