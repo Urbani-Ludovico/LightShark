@@ -1,6 +1,19 @@
 
 #include "LSState.h"
 
+#define LS_STATE_IS_BOARD_CHECK_ATTACK(piece, masks, directions, directions_count) \
+{ \
+    for (int d = 0; d < directions_count; d++) { \
+        ls_board_state_t current_state = piece; \
+        for (uint8_t i = 0; i < 7 && current_state; i++) { \
+            current_state &= masks[d]; \
+            current_state = directions[d] > 0 ? current_state << directions[d] : current_state >> -directions[d]; \
+            if (current_state & king) return true; \
+            current_state &= occupied_mask; \
+        } \
+    } \
+}
+
 ls_check_t ls_state_is_check(ls_state_t const state) {
     if (state->is_check == UNDEFINED_CHECK) {
         if (ls_state_is_board_check(state->board, WHITE) == true) {
@@ -25,132 +38,35 @@ bool ls_state_is_board_check(ls_board_t const board, ls_player_t const player) {
 
     ls_board_state_t const occupied_mask = ~ls_board_occupied_mask(board);
 
+    constexpr int8_t rook_directions[] = {8, -1, -8, 1};
+    constexpr ls_board_state_t rook_masks[] = {
+        0x00FFFFFFFFFFFFFF, // Up
+        0xFEFEFEFEFEFEFEFE, // Left
+        0xFFFFFFFFFFFFFF00, // Down
+        0x7F7F7F7F7F7F7F7F, // Right
+    };
+    constexpr int8_t bishop_directions[] = {7, -9, -7, 9};
+    constexpr ls_board_state_t bishop_masks[] = {
+        0x00FEFEFEFEFEFEFE, // Up-Right
+        0xFEFEFEFEFEFEFE00, // Down-Left
+        0x7F7F7F7F7F7F7F00, // Down-Right
+        0x007F7F7F7F7F7F7F // Up-Left
+    };
+
     // Queen
-    // From top clockwise
-    ls_board_state_t current_state = queen;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0x00FFFFFFFFFFFFFF;
-        current_state <<= 8;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = queen;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0x00FEFEFEFEFEFEFE;
-        current_state <<= 7;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = queen;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0xFEFEFEFEFEFEFEFE;
-        current_state >>= 1;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = queen;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0xFEFEFEFEFEFEFE00;
-        current_state >>= 9;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = queen;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0xFFFFFFFFFFFFFF00;
-        current_state >>= 8;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = queen;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0x7F7F7F7F7F7F7F00;
-        current_state >>= 7;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = queen;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0x7F7F7F7F7F7F7F7F;
-        current_state <<= 1;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = queen;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0x007F7F7F7F7F7F7F;
-        current_state <<= 9;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
+    LS_STATE_IS_BOARD_CHECK_ATTACK(queen, rook_masks, rook_directions, 4)
+    LS_STATE_IS_BOARD_CHECK_ATTACK(queen, bishop_masks, bishop_directions, 4)
 
     // Bishop
-    // From top clockwise
-    current_state = bishop;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0x00FEFEFEFEFEFEFE;
-        current_state <<= 7;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = bishop;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0xFEFEFEFEFEFEFE00;
-        current_state >>= 9;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = bishop;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0x7F7F7F7F7F7F7F00;
-        current_state >>= 7;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = bishop;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0x007F7F7F7F7F7F7F;
-        current_state <<= 9;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
+    LS_STATE_IS_BOARD_CHECK_ATTACK(bishop, bishop_masks, bishop_directions, 4)
 
     // Knight
-    // Top-right, right-top, right-bottom, bottom-right, bottom-left, left-bottom, left-top, top-left
     if ((((knight & 0x0000FEFEFEFEFEFE) << 15) | ((knight & 0x00FCFCFCFCFCFCFC) << 6) | ((knight & 0xFCFCFCFCFCFCFC00) >> 10) | ((knight & 0xFEFEFEFEFEFE0000) >> 17) | ((knight & 0x7F7F7F7F7F7F0000) >> 15) | ((knight & 0x3F3F3F3F3F3F3F00) >> 6) | ((knight & 0x003F3F3F3F3F3F3F) << 10) | ((knight & 0x00007F7F7F7F7F7F) << 17)) & king) {
         return true;
     }
 
-    // Rock
-    // From top clockwise
-    current_state = rook;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0x00FFFFFFFFFFFFFF;
-        current_state <<= 8;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = rook;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0xFEFEFEFEFEFEFEFE;
-        current_state >>= 1;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = rook;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0xFFFFFFFFFFFFFF00;
-        current_state >>= 8;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
-    current_state = rook;
-    for (uint8_t i = 0; i < 7 && current_state; i++) {
-        current_state &= 0x7F7F7F7F7F7F7F7F;
-        current_state <<= 1;
-        if (current_state & king) return true;
-        current_state &= occupied_mask;
-    }
+    // Rook
+    LS_STATE_IS_BOARD_CHECK_ATTACK(rook, rook_masks, rook_directions, 4)
 
     // Pawn
     if ((player == WHITE && ((((pawn & 0x007F7F7F7F7F7F7F) << 9) | ((pawn & 0x00FEFEFEFEFEFEFE) << 7)) & king)) || (player == BLACK && ((((pawn & 0xFEFEFEFEFEFEFE00) >> 9) | ((pawn & 0x7F7F7F7F7F7F7F00) >> 7)) & king))) {
