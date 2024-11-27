@@ -6,8 +6,6 @@
 #include "LSState.h"
 #include "LSTree.h"
 
-#include <string.h>
-
 
 ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state) {
     if (state->moves_length != 0) return LS_STATE_GENERATION_MOVES_ALREADY_DONE;
