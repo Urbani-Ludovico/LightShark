@@ -8,6 +8,25 @@ ls_board_t ls_board_init() {
     return calloc(1, sizeof(struct _ls_board_t));
 }
 
+ls_board_t ls_board_copy(ls_board_t const board) {
+    auto const copy = (ls_board_t)malloc(sizeof(struct _ls_board_t));
+
+    copy->white_king = board->white_king;
+    copy->black_king = board->black_king;
+    copy->white_queen = board->white_queen;
+    copy->black_queen = board->black_queen;
+    copy->white_bishop = board->white_bishop;
+    copy->black_bishop = board->black_bishop;
+    copy->white_knight = board->white_knight;
+    copy->black_knight = board->black_knight;
+    copy->white_rock = board->white_rock;
+    copy->black_rock = board->black_rock;
+    copy->white_pawn = board->white_pawn;
+    copy->black_pawn = board->black_pawn;
+
+    return copy;
+}
+
 void ls_board_destroy(const ls_board_t board) {
     free(board);
 }

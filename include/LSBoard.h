@@ -5,6 +5,7 @@
 #include "LSTypes.h"
 
 ls_board_t ls_board_init();
+ls_board_t ls_board_copy(ls_board_t board);
 void ls_board_destroy(ls_board_t board);
 
 void ls_board_print(ls_board_t board);
