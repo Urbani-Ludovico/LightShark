@@ -1,6 +1,8 @@
 
 #include "LSGenereteMoves.h"
 
+#include <stdlib.h>
+
 #include "LSBoard.h"
 #include "LSMoves.h"
 #include "LSState.h"
@@ -264,6 +266,95 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                         ls_board_t const new_board = ls_board_copy(state->board);
                         new_board->black_pawn = (1ULL << (i - 9)) | (pawn & ~(1ULL << i));
                         new_board->white_pawn = new_board->white_pawn & ~(1ULL << (i - 1));
+                        LS_STATE_MOVES_GENERATE_INSERT_MOVE_CHECK
+                    }
+                }
+            }
+        }
+    }
+
+    // Castling
+    if (state->turn == LS_PLAYER_WHITE) {
+        bool king_stop = true;
+        bool left_rock_stop = true;
+        bool right_rock_stop = true;
+        ls_state_t current_state = state;
+        while (king_stop && (left_rock_stop || right_rock_stop) && current_state != nullptr) {
+            if (!(current_state->board->white_king & LS_START_POSITION_WHITE_KING)) king_stop = false;
+            if (!(current_state->board->white_rook & 0x80ULL)) left_rock_stop = false;
+            if (!(current_state->board->white_rook & 0x1ULL)) right_rock_stop = false;
+            current_state = current_state->parent;
+        }
+
+        if (king_stop) {
+            ls_board_state_t const no_white_king = state->board->white_king & ~0x8ULL;
+            if (left_rock_stop && ((0x70ULL & empty_squares) == 0x70ULL)) {
+                ls_board_t const new_board = ls_board_copy(state->board);
+
+                new_board->white_king = no_white_king | 0x10ULL;
+                if (ls_state_is_board_check(new_board, LS_PLAYER_BLACK)) free(new_board);
+                else {
+                    new_board->white_king = no_white_king | 0x20ULL;
+                    if (ls_state_is_board_check(new_board, LS_PLAYER_BLACK)) free(new_board);
+                    else {
+                        new_board->white_rook = (new_board->white_rook & ~0x80ULL) | 0x10ULL;
+                        LS_STATE_MOVES_GENERATE_INSERT_MOVE_CHECK
+                    }
+                }
+            }
+            if (left_rock_stop && ((0x6ULL & empty_squares) == 0x6ULL)) {
+                ls_board_t const new_board = ls_board_copy(state->board);
+
+                new_board->white_king = no_white_king | 0x4ULL;
+                if (ls_state_is_board_check(new_board, LS_PLAYER_BLACK)) free(new_board);
+                else {
+                    new_board->white_king = no_white_king | 0x2ULL;
+                    if (ls_state_is_board_check(new_board, LS_PLAYER_BLACK)) free(new_board);
+                    else {
+                        new_board->white_rook = (new_board->white_rook & ~0x1ULL) | 0x4ULL;
+                        LS_STATE_MOVES_GENERATE_INSERT_MOVE_CHECK
+                    }
+                }
+            }
+        }
+    } else {
+        bool king_stop = true;
+        bool left_rock_stop = true;
+        bool right_rock_stop = true;
+        ls_state_t current_state = state;
+        while (king_stop && (left_rock_stop || right_rock_stop) && current_state != nullptr) {
+            if (!(current_state->board->white_king & LS_START_POSITION_BLACK_KING)) king_stop = false;
+            if (!(current_state->board->white_rook & 0x8000000000000000)) left_rock_stop = false;
+            if (!(current_state->board->white_rook & 0x0100000000000000)) right_rock_stop = false;
+            current_state = current_state->parent;
+        }
+
+        if (king_stop) {
+            ls_board_state_t const no_black_king = state->board->black_king & ~0x0800000000000000;
+            if (left_rock_stop && ((0x7000000000000000 & empty_squares) == 0x7000000000000000)) {
+                ls_board_t const new_board = ls_board_copy(state->board);
+
+                new_board->black_king = no_black_king | 0x1000000000000000;
+                if (ls_state_is_board_check(new_board, LS_PLAYER_WHITE)) free(new_board);
+                else {
+                    new_board->black_king = no_black_king | 0x2000000000000000;
+                    if (ls_state_is_board_check(new_board, LS_PLAYER_WHITE)) free(new_board);
+                    else {
+                        new_board->black_rook = (new_board->black_rook & ~0x8000000000000000) | 0x1000000000000000;
+                        LS_STATE_MOVES_GENERATE_INSERT_MOVE_CHECK
+                    }
+                }
+            }
+            if (left_rock_stop && ((0x0600000000000000 & empty_squares) == 0x0600000000000000)) {
+                ls_board_t const new_board = ls_board_copy(state->board);
+
+                new_board->black_king = no_black_king | 0x0400000000000000;
+                if (ls_state_is_board_check(new_board, LS_PLAYER_WHITE)) free(new_board);
+                else {
+                    new_board->black_king = no_black_king | 0x0200000000000000;
+                    if (ls_state_is_board_check(new_board, LS_PLAYER_WHITE)) free(new_board);
+                    else {
+                        new_board->black_rook = (new_board->black_rook & ~0x0100000000000000) | 0x0400000000000000;
                         LS_STATE_MOVES_GENERATE_INSERT_MOVE_CHECK
                     }
                 }
