@@ -182,12 +182,14 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                 }
             }
 
-            if ((state->turn == LS_PLAYER_WHITE ? 0x000000000000FF00 : 0x00FF000000000000) & (1ULL << i)) {
-                ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 16)) : (1ULL >> (i - 16))) & opponent_positions; // TODO: fix this line
-
-                if (new_pawn) {
-                    new_pawn |= pawn & ~(1ULL << i);
-
+            if (state->turn == LS_PLAYER_WHITE) {
+                if ((0x000000000000FF00 & (1ULL << i)) && (empty_squares & (1ULL << (i + 8))) && (empty_squares & (1ULL << (i + 16)))) {
+                    ls_board_state_t const new_pawn = (1ULL << (i + 16)) | (pawn & ~(1ULL << i));
+                    LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
+                }
+            } else {
+                if ((0x00FF000000000000 & (1ULL << i)) && (empty_squares & (1ULL << (i - 8))) && (empty_squares & (1ULL << (i - 16)))) {
+                    ls_board_state_t const new_pawn = (1ULL << (i - 16)) | (pawn & ~(1ULL << i));
                     LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
                 }
             }
