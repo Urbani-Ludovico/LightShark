@@ -32,6 +32,8 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
     // King
     ls_board_state_t const king = state->turn == LS_PLAYER_WHITE ? state->board->white_king : state->board->black_king;
     ls_board_state_t const queen = state->turn == LS_PLAYER_WHITE ? state->board->white_queen : state->board->black_queen;
+    ls_board_state_t const bishop = state->turn == LS_PLAYER_WHITE ? state->board->white_bishop : state->board->black_bishop;
+    ls_board_state_t const rook = state->turn == LS_PLAYER_WHITE ? state->board->white_rook : state->board->black_rook;
     for (uint8_t i = 0; i < 64; i++) {
         if (king & (1ULL << i)) {
             for (uint8_t move = 0; move < _ls_king_moves; move++) {
@@ -61,6 +63,50 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                             LS_STATE_MOVES_GENERATE_INSERT_MOVE(queen)
 
                             if (new_queen & opponent_positions) {
+                                break;
+                            }
+                        } else break;
+                    }
+                }
+            }
+        }
+
+        // Bishop
+        if (bishop & (1ULL << i)) {
+            for (uint8_t move = 0; move < _ls_bishop_moves; move++) {
+                ls_board_state_t new_bishop = (1ULL << i);
+                for (uint8_t move_step = 0; move_step < _ls_queen_moves; move_step++) {
+                    if (_ls_queen_moves_from_masks[move] & new_bishop) {
+                        new_bishop = (_ls_king_moves_directions[move] > 0 ? (new_bishop << _ls_king_moves_directions[move]) : (new_bishop >> -_ls_king_moves_directions[move])) & empty_squares;
+
+                        if (new_bishop) {
+                            new_bishop |= (queen & ~(1ULL << i));
+
+                            LS_STATE_MOVES_GENERATE_INSERT_MOVE(bishop)
+
+                            if (new_bishop & opponent_positions) {
+                                break;
+                            }
+                        } else break;
+                    }
+                }
+            }
+        }
+
+        // Rook
+        if (rook & (1ULL << i)) {
+            for (uint8_t move = 0; move < _ls_rook_moves; move++) {
+                ls_board_state_t new_rook = (1ULL << i);
+                for (uint8_t move_step = 0; move_step < _ls_queen_moves; move_step++) {
+                    if (_ls_queen_moves_from_masks[move] & new_rook) {
+                        new_rook = (_ls_king_moves_directions[move] > 0 ? (new_rook << _ls_king_moves_directions[move]) : (new_rook >> -_ls_king_moves_directions[move])) & empty_squares;
+
+                        if (new_rook) {
+                            new_rook |= (queen & ~(1ULL << i));
+
+                            LS_STATE_MOVES_GENERATE_INSERT_MOVE(rook)
+
+                            if (new_rook & opponent_positions) {
                                 break;
                             }
                         } else break;
