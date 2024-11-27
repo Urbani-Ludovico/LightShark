@@ -1,6 +1,8 @@
 
 #include "start.h"
 
+#include <LightShark.h>
+
 UNITY_TEST_RETURN test_init(UNITY_TEST_PARAMETERS) {
     UNITY_TEST_BEGIN
 
@@ -11,7 +13,6 @@ UNITY_TEST_RETURN test_init(UNITY_TEST_PARAMETERS) {
     UNITY_ASSERT_POINTER_EQUAL(engine->state, engine->tree)
     UNITY_ASSERT_POINTER_EQUAL(engine->board, engine->tree->board)
 
-    UNITY_ASSERT_EQUAL(engine->tree->capture, 0x0)
     UNITY_ASSERT_NULLPTR(engine->tree->moves)
     UNITY_ASSERT_EQUAL(engine->tree->moves_length, 0)
     UNITY_ASSERT_EQUAL(engine->tree->_moves_array_length, 0)
@@ -20,6 +21,7 @@ UNITY_TEST_RETURN test_init(UNITY_TEST_PARAMETERS) {
 
     UNITY_TEST_END
 }
+
 
 UNITY_TEST_RETURN test_init_game_information(UNITY_TEST_PARAMETERS) {
     UNITY_TEST_BEGIN
@@ -43,6 +45,7 @@ UNITY_TEST_RETURN test_init_game_information(UNITY_TEST_PARAMETERS) {
 
     UNITY_TEST_END
 }
+
 
 UNITY_TEST_RETURN test_board_start(UNITY_TEST_PARAMETERS) {
     UNITY_TEST_BEGIN

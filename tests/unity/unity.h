@@ -3,6 +3,7 @@
 #define LIGHTSHARK_TESTS_UNITY_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdint.h>
 
 #define UNITY_TEST_PARAMETERS unsigned int* _unity_assert_count, unsigned int* _unity_assert_passed_count, unsigned int* _unity_assert_failed_count
