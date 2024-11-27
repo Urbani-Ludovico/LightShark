@@ -15,27 +15,23 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
 
     // King
     ls_board_state_t const king = state->turn == LS_PLAYER_WHITE ? state->board->white_king : state->board->black_king;
-    ls_board_state_t king_shift = king;
     for (uint8_t i = 0; i < 64; i++) {
-        if (king_shift % 2 == 0) {
-            ls_board_state_t const this_king = 1ULL << i;
-
+        if (king & (1ULL << i)) {
             for (uint8_t j = 0; j < _ls_king_moves; j++) {
-                if (this_king & _ls_king_moves_from_masks[j]) {
-                    ls_board_state_t new_king = (_ls_king_moves_directions[j] > 0 ? this_king << _ls_king_moves_directions[j] : this_king >> -_ls_king_moves_directions[j]) & empty_squares;
+                if (_ls_king_moves_from_masks[j] & (1ULL << i)) {
+                    ls_board_state_t new_king = (_ls_king_moves_directions[j] > 0 ? (1ULL << (i + _ls_king_moves_directions[j])) : (1ULL >> (i - _ls_king_moves_directions[j]))) & empty_squares;
 
                     if (new_king) {
-                        new_king |= (king & ~this_king);
+                        new_king |= (king & ~(1ULL << i));
 
                         ls_board_t const new_board = ls_board_copy(state->board);
-
                         if (state->turn == LS_PLAYER_WHITE) {
                             new_board->white_king = new_king;
                         } else {
                             new_board->black_king = new_king;
                         }
 
-                        if (ls_state_is_board_check(new_board, state->turn) == false) {
+                        if (!ls_state_is_board_check(new_board, state->turn)) {
                             ls_tree_insert_board_move(state, new_board);
                         } else {
                             ls_board_destroy(new_board);
@@ -44,8 +40,6 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                 }
             }
         }
-
-        king_shift >>= 1;
     }
 
     return state->moves_length > 0 ? LS_STATE_GENERATION_MOVES_DONE : LS_STATE_GENERATION_MOVES_EMPTY;
