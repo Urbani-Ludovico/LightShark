@@ -16,6 +16,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
 
     // King
     ls_board_state_t const king = state->turn == LS_PLAYER_WHITE ? state->board->white_king : state->board->black_king;
+    ls_board_state_t const queen = state->turn == LS_PLAYER_WHITE ? state->board->white_queen : state->board->black_queen;
     for (uint8_t i = 0; i < 64; i++) {
         if (king & (1ULL << i)) {
             for (uint8_t move = 0; move < _ls_king_moves; move++) {
@@ -41,11 +42,8 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                 }
             }
         }
-    }
 
-    // Queen
-    ls_board_state_t const queen = state->turn == LS_PLAYER_WHITE ? state->board->white_queen : state->board->black_queen;
-    for (uint8_t i = 0; i < 64; i++) {
+        // Queen
         if (queen & (1ULL << i)) {
             for (uint8_t move = 0; move < _ls_queen_moves; move++) {
                 ls_board_state_t new_queen = (1ULL << i);
