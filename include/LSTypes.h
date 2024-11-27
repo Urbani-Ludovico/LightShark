@@ -15,8 +15,8 @@ enum _ls_player_t {
 typedef enum _ls_player_t ls_player_t;
 
 enum _ls_check_t {
-    LS_CHECK_WHITE,
-    LS_CHECK_BLACK,
+    LS_WHITE_CHECK,
+    LS_BLACK_CHECK,
     LS_NO_CHECK,
     LS_UNDEFINED_CHECK
 };

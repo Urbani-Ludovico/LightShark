@@ -10,7 +10,7 @@
 
 #ifndef LS_STATE_MOVES_GENERATE_INSERT_MOVE_CHECK
 #define LS_STATE_MOVES_GENERATE_INSERT_MOVE_CHECK \
-    if (!ls_state_is_board_check(new_board, state->turn)) { \
+    if (!ls_state_is_board_check(new_board, state->turn == LS_PLAYER_WHITE ? LS_PLAYER_BLACK : LS_PLAYER_WHITE)) { \
         ls_tree_insert_board_move(state, new_board); \
     } else { \
         ls_board_destroy(new_board); \
