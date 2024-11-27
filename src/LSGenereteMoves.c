@@ -207,7 +207,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                         new_board->black_pawn = new_board->black_pawn & ~(1ULL << (i - 1));
                         LS_STATE_MOVES_GENERATE_INSERT_MOVE_CHECK
                     }
-                } else  {
+                } else {
                     if ((0x000000007F000000 & (1ULL << i)) && (state->board->white_pawn & (1ULL << (i + 1))) && (state->parent->board->white_pawn & (1ULL << (i - 15)))) {
                         ls_board_t const new_board = ls_board_copy(state->board);
                         new_board->black_pawn = (1ULL << (i + 9)) | (pawn & ~(1ULL << i));
