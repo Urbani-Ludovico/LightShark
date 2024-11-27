@@ -6,6 +6,21 @@
 #include "LSState.h"
 #include "LSTree.h"
 
+#ifndef LS_STATE_MOVES_GENERATE_INSERT_MOVE
+#define LS_STATE_MOVES_GENERATE_INSERT_MOVE(piece) \
+    ls_board_t const new_board = ls_board_copy(state->board); \
+    if (state->turn == LS_PLAYER_WHITE) { \
+        new_board->white_##piece = new_##piece; \
+    } else { \
+        new_board->black_##piece = new_##piece; \
+    } \
+    if (!ls_state_is_board_check(new_board, state->turn)) { \
+        ls_tree_insert_board_move(state, new_board); \
+    } else { \
+        ls_board_destroy(new_board); \
+    }
+#endif
+
 
 ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state) {
     if (state->moves_length != 0) return LS_STATE_GENERATION_MOVES_ALREADY_DONE;
@@ -26,18 +41,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                     if (new_king) {
                         new_king |= (king & ~(1ULL << i));
 
-                        ls_board_t const new_board = ls_board_copy(state->board);
-                        if (state->turn == LS_PLAYER_WHITE) {
-                            new_board->white_king = new_king;
-                        } else {
-                            new_board->black_king = new_king;
-                        }
-
-                        if (!ls_state_is_board_check(new_board, state->turn)) {
-                            ls_tree_insert_board_move(state, new_board);
-                        } else {
-                            ls_board_destroy(new_board);
-                        }
+                        LS_STATE_MOVES_GENERATE_INSERT_MOVE(king)
                     }
                 }
             }
@@ -54,18 +58,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                         if (new_queen) {
                             new_queen |= (queen & ~(1ULL << i));
 
-                            ls_board_t const new_board = ls_board_copy(state->board);
-                            if (state->turn == LS_PLAYER_WHITE) {
-                                new_board->white_queen = new_queen;
-                            } else {
-                                new_board->black_queen = new_queen;
-                            }
-
-                            if (!ls_state_is_board_check(new_board, state->turn)) {
-                                ls_tree_insert_board_move(state, new_board);
-                            } else {
-                                ls_board_destroy(new_board);
-                            }
+                            LS_STATE_MOVES_GENERATE_INSERT_MOVE(queen)
 
                             if (new_queen & opponent_positions) {
                                 break;
