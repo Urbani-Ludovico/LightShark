@@ -152,50 +152,42 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
 
         // Pawn
         if (pawn & (1ULL << i)) {
+            // Forward
             if ((state->turn == LS_PLAYER_WHITE ? 0x00FFFFFFFFFFFFFF : 0xFFFFFFFFFFFFFF00) & (1ULL << i)) {
                 ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 8)) : (1ULL >> (i - 8))) & empty_squares;
-
                 if (new_pawn) {
                     new_pawn |= pawn & ~(1ULL << i);
-
                     LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
                 }
             }
 
+            // Eat left
             if ((state->turn == LS_PLAYER_WHITE ? 0x007F7F7F7F7F7F7F : 0x7F7F7F7F7F7F7F00) & (1ULL << i)) {
                 ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 9)) : (1ULL >> (i - 7))) & opponent_positions;
-
                 if (new_pawn) {
                     new_pawn |= pawn & ~(1ULL << i);
-
                     LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
                 }
             }
 
+            // Eat right
             if ((state->turn == LS_PLAYER_WHITE ? 0x00FEFEFEFEFEFEFE : 0xFEFEFEFEFEFEFE00) & (1ULL << i)) {
                 ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 7)) : (1ULL >> (i - 9))) & opponent_positions;
-
                 if (new_pawn) {
                     new_pawn |= pawn & ~(1ULL << i);
-
                     LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
                 }
             }
 
             if (state->turn == LS_PLAYER_WHITE) {
+                // Double forward
                 if ((0x000000000000FF00 & (1ULL << i)) && (empty_squares & (1ULL << (i + 8))) && (empty_squares & (1ULL << (i + 16)))) {
                     ls_board_state_t const new_pawn = (1ULL << (i + 16)) | (pawn & ~(1ULL << i));
                     LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
                 }
-            } else {
-                if ((0x00FF000000000000 & (1ULL << i)) && (empty_squares & (1ULL << (i - 8))) && (empty_squares & (1ULL << (i - 16)))) {
-                    ls_board_state_t const new_pawn = (1ULL << (i - 16)) | (pawn & ~(1ULL << i));
-                    LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
-                }
-            }
 
-            if (state->parent != nullptr) {
-                if (state->turn == LS_PLAYER_WHITE) {
+                // En-passant
+                if (state->parent != nullptr) {
                     if ((0x0000007F00000000 & (1ULL << i)) && (state->board->white_pawn & (1ULL << (i + 1))) && (state->parent->board->white_pawn & (1ULL << (i + 17)))) {
                         ls_board_t const new_board = ls_board_copy(state->board);
                         new_board->white_pawn = (1ULL << (i + 9)) | (pawn & ~(1ULL << i));
@@ -207,7 +199,16 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                         new_board->black_pawn = new_board->black_pawn & ~(1ULL << (i - 1));
                         LS_STATE_MOVES_GENERATE_INSERT_MOVE_CHECK
                     }
-                } else {
+                }
+            } else {
+                // Double forward
+                if ((0x00FF000000000000 & (1ULL << i)) && (empty_squares & (1ULL << (i - 8))) && (empty_squares & (1ULL << (i - 16)))) {
+                    ls_board_state_t const new_pawn = (1ULL << (i - 16)) | (pawn & ~(1ULL << i));
+                    LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
+                }
+
+                // En-passant
+                if (state->parent != nullptr) {
                     if ((0x000000007F000000 & (1ULL << i)) && (state->board->white_pawn & (1ULL << (i + 1))) && (state->parent->board->white_pawn & (1ULL << (i - 15)))) {
                         ls_board_t const new_board = ls_board_copy(state->board);
                         new_board->black_pawn = (1ULL << (i + 9)) | (pawn & ~(1ULL << i));
