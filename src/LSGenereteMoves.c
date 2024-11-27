@@ -43,11 +43,10 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
     if (state->moves_length != 0) return LS_STATE_GENERATION_MOVES_ALREADY_DONE;
     if (state->turn == LS_UNDEFINED_PLAYER) return LS_STATE_GENERATION_MOVES_PLAYER_UNDEFINED;
 
-    ls_board_state_t const empty_white_squares = ~(state->turn == LS_PLAYER_WHITE ? ls_board_occupied_mask_white(state->board) : ls_board_occupied_mask_black(state->board));
+    ls_board_state_t const empty_player_squares = ~(state->turn == LS_PLAYER_WHITE ? ls_board_occupied_mask_white(state->board) : ls_board_occupied_mask_black(state->board));
     ls_board_state_t const opponent_positions = state->turn == LS_PLAYER_WHITE ? ls_board_occupied_mask_black(state->board) : ls_board_occupied_mask_white(state->board);
     ls_board_state_t const empty_squares = ~ls_board_occupied_mask(state->board);
 
-    // King
     ls_board_state_t const king = state->turn == LS_PLAYER_WHITE ? state->board->white_king : state->board->black_king;
     ls_board_state_t const queen = state->turn == LS_PLAYER_WHITE ? state->board->white_queen : state->board->black_queen;
     ls_board_state_t const bishop = state->turn == LS_PLAYER_WHITE ? state->board->white_bishop : state->board->black_bishop;
@@ -59,7 +58,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
         if (king & (1ULL << i)) {
             for (uint8_t move = 0; move < _ls_king_moves; move++) {
                 if (_ls_king_moves_from_masks[move] & (1ULL << i)) {
-                    ls_board_state_t new_king = (1ULL << (i + _ls_king_moves_directions[move])) & empty_white_squares;
+                    ls_board_state_t new_king = (1ULL << (i + _ls_king_moves_directions[move])) & empty_player_squares;
 
                     if (new_king) {
                         new_king |= king & ~(1ULL << i);
@@ -76,7 +75,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                 ls_board_state_t new_queen = (1ULL << i);
                 for (uint8_t move_step = 0; move_step < _ls_queen_moves; move_step++) {
                     if (_ls_queen_moves_from_masks[move] & new_queen) {
-                        new_queen = (_ls_king_moves_directions[move] > 0 ? (new_queen << _ls_king_moves_directions[move]) : (new_queen >> -_ls_king_moves_directions[move])) & empty_white_squares;
+                        new_queen = (_ls_king_moves_directions[move] > 0 ? (new_queen << _ls_king_moves_directions[move]) : (new_queen >> -_ls_king_moves_directions[move])) & empty_player_squares;
 
                         if (new_queen) {
                             new_queen |= queen & ~(1ULL << i);
@@ -98,7 +97,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                 ls_board_state_t new_bishop = (1ULL << i);
                 for (uint8_t move_step = 0; move_step < _ls_queen_moves; move_step++) {
                     if (_ls_queen_moves_from_masks[move] & new_bishop) {
-                        new_bishop = (_ls_king_moves_directions[move] > 0 ? (new_bishop << _ls_king_moves_directions[move]) : (new_bishop >> -_ls_king_moves_directions[move])) & empty_white_squares;
+                        new_bishop = (_ls_king_moves_directions[move] > 0 ? (new_bishop << _ls_king_moves_directions[move]) : (new_bishop >> -_ls_king_moves_directions[move])) & empty_player_squares;
 
                         if (new_bishop) {
                             new_bishop |= queen & ~(1ULL << i);
@@ -118,7 +117,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
         if (knight & (1ULL << i)) {
             for (uint8_t move = 0; move < _ls_knight_moves; move++) {
                 if (_ls_knight_moves_from_masks[move] & (1ULL << i)) {
-                    ls_board_state_t new_knight = (1ULL << (i + _ls_knight_moves_directions[move])) & empty_white_squares;
+                    ls_board_state_t new_knight = (1ULL << (i + _ls_knight_moves_directions[move])) & empty_player_squares;
 
                     if (new_knight) {
                         new_knight |= king & ~(1ULL << i);
@@ -135,7 +134,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                 ls_board_state_t new_rook = (1ULL << i);
                 for (uint8_t move_step = 0; move_step < _ls_queen_moves; move_step++) {
                     if (_ls_queen_moves_from_masks[move] & new_rook) {
-                        new_rook = (_ls_king_moves_directions[move] > 0 ? (new_rook << _ls_king_moves_directions[move]) : (new_rook >> -_ls_king_moves_directions[move])) & empty_white_squares;
+                        new_rook = (_ls_king_moves_directions[move] > 0 ? (new_rook << _ls_king_moves_directions[move]) : (new_rook >> -_ls_king_moves_directions[move])) & empty_player_squares;
 
                         if (new_rook) {
                             new_rook |= queen & ~(1ULL << i);
