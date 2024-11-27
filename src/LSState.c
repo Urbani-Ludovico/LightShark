@@ -56,7 +56,7 @@ bool ls_state_is_board_check(ls_board_t const board, ls_player_t const player) {
     }
 
     // Rook
-    LS_STATE_IS_BOARD_CHECK_ATTACK(rook, _ls_rock_moves_from_masks, _ls_rock_moves_directions, _ls_rock_moves)
+    LS_STATE_IS_BOARD_CHECK_ATTACK(rook, _ls_rook_moves_from_masks, _ls_rook_moves_directions, _ls_rook_moves)
 
     // Pawn
     if ((player == LS_PLAYER_WHITE && ((((pawn & 0x007F7F7F7F7F7F7F) << 9) | ((pawn & 0x00FEFEFEFEFEFEFE) << 7)) & king)) || (player == LS_PLAYER_BLACK && ((((pawn & 0xFEFEFEFEFEFEFE00) >> 9) | ((pawn & 0x7F7F7F7F7F7F7F00) >> 7)) & king))) {

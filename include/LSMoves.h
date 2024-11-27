@@ -54,9 +54,9 @@ constexpr ls_board_state_t _ls_knight_moves_from_masks[] = {
     0x00007F7F7F7F7F7F // Up-Left
 };
 
-constexpr uint8_t _ls_rock_moves = 4;
-constexpr int8_t _ls_rock_moves_directions[] = {8, -1, -8, 1};
-constexpr ls_board_state_t _ls_rock_moves_from_masks[] = {
+constexpr uint8_t _ls_rook_moves = 4;
+constexpr int8_t _ls_rook_moves_directions[] = {8, -1, -8, 1};
+constexpr ls_board_state_t _ls_rook_moves_from_masks[] = {
     0x00FFFFFFFFFFFFFF, // Up
     0xFEFEFEFEFEFEFEFE, // Right
     0xFFFFFFFFFFFFFF00, // Down
