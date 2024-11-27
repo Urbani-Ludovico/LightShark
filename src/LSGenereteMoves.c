@@ -59,7 +59,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
         if (king & (1ULL << i)) {
             for (uint8_t move = 0; move < _ls_king_moves; move++) {
                 if (_ls_king_moves_from_masks[move] & (1ULL << i)) {
-                    ls_board_state_t new_king = (_ls_king_moves_directions[move] > 0 ? (1ULL << (i + _ls_king_moves_directions[move])) : (1ULL >> (i - _ls_king_moves_directions[move]))) & empty_white_squares;
+                    ls_board_state_t new_king = (1ULL << (i + _ls_king_moves_directions[move])) & empty_white_squares;
 
                     if (new_king) {
                         new_king |= king & ~(1ULL << i);
@@ -118,7 +118,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
         if (knight & (1ULL << i)) {
             for (uint8_t move = 0; move < _ls_knight_moves; move++) {
                 if (_ls_knight_moves_from_masks[move] & (1ULL << i)) {
-                    ls_board_state_t new_knight = (_ls_knight_moves_directions[move] > 0 ? (1ULL << (i + _ls_knight_moves_directions[move])) : (1ULL >> (i - _ls_knight_moves_directions[move]))) & empty_white_squares;
+                    ls_board_state_t new_knight = (1ULL << (i + _ls_knight_moves_directions[move])) & empty_white_squares;
 
                     if (new_knight) {
                         new_knight |= king & ~(1ULL << i);
@@ -155,7 +155,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
         if (pawn & (1ULL << i)) {
             // Forward
             if ((state->turn == LS_PLAYER_WHITE ? 0x0000FFFFFFFFFFFF : 0xFFFFFFFFFFFF0000) & (1ULL << i)) {
-                ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 8)) : (1ULL >> (i - 8))) & empty_squares;
+                ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 8)) : (1ULL << (i - 8))) & empty_squares;
                 if (new_pawn) {
                     new_pawn |= pawn & ~(1ULL << i);
                     LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
@@ -164,7 +164,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
 
             // Eat left
             if ((state->turn == LS_PLAYER_WHITE ? 0x007F7F7F7F7F7F7F : 0x7F7F7F7F7F7F7F00) & (1ULL << i)) {
-                ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 9)) : (1ULL >> (i - 7))) & opponent_positions;
+                ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 9)) : (1ULL << (i - 7))) & opponent_positions;
                 if (new_pawn) {
                     new_pawn |= pawn & ~(1ULL << i);
                     LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
@@ -173,7 +173,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
 
             // Eat right
             if ((state->turn == LS_PLAYER_WHITE ? 0x00FEFEFEFEFEFEFE : 0xFEFEFEFEFEFEFE00) & (1ULL << i)) {
-                ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 7)) : (1ULL >> (i - 9))) & opponent_positions;
+                ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 7)) : (1ULL << (i - 9))) & opponent_positions;
                 if (new_pawn) {
                     new_pawn |= pawn & ~(1ULL << i);
                     LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
@@ -258,12 +258,12 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                 if (state->parent != nullptr) {
                     if ((0x000000007F000000 & (1ULL << i)) && (state->board->white_pawn & (1ULL << (i + 1))) && (state->parent->board->white_pawn & (1ULL << (i - 15)))) {
                         ls_board_t const new_board = ls_board_copy(state->board);
-                        new_board->black_pawn = (1ULL << (i + 9)) | (pawn & ~(1ULL << i));
+                        new_board->black_pawn = (1ULL << (i - 7)) | (pawn & ~(1ULL << i));
                         new_board->white_pawn = new_board->white_pawn & ~(1ULL << (i + 1));
                         LS_STATE_MOVES_GENERATE_INSERT_MOVE_CHECK
-                    } else if ((0x00000000FE000000 & (1ULL << i)) && (state->board->white_pawn & (1ULL << (i - 1))) && (state->parent->board->white_pawn & (1ULL << (i + 17)))) {
+                    } else if ((0x00000000FE000000 & (1ULL << i)) && (state->board->white_pawn & (1ULL << (i - 1))) && (state->parent->board->white_pawn & (1ULL << (i - 17)))) {
                         ls_board_t const new_board = ls_board_copy(state->board);
-                        new_board->black_pawn = (1ULL << (i + 7)) | (pawn & ~(1ULL << i));
+                        new_board->black_pawn = (1ULL << (i - 9)) | (pawn & ~(1ULL << i));
                         new_board->white_pawn = new_board->white_pawn & ~(1ULL << (i - 1));
                         LS_STATE_MOVES_GENERATE_INSERT_MOVE_CHECK
                     }
