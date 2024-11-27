@@ -2,8 +2,6 @@
 #ifndef LIGHTSHARK_TREE_H
 #define LIGHTSHARK_TREE_H
 
-#define _LS_TREE_CHILDREN_ARRAY_INCREMENT 20
-
 #include "LSTypes.h"
 
 ls_state_t ls_tree_init();

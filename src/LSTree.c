@@ -6,6 +6,10 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#ifndef LS_TREE_CHILDREN_ARRAY_INCREMENT
+#define LS_TREE_CHILDREN_ARRAY_INCREMENT 20
+#endif
+
 ls_state_t ls_tree_init() {
     auto const tree = (ls_state_t)malloc(sizeof(struct _ls_state_t));
 
@@ -41,10 +45,10 @@ void ls_tree_destroy(const ls_state_t tree) {
 
 void ls_tree_insert_move(const ls_state_t tree, const ls_state_t child) {
     if (tree->_moves_array_length == 0) {
-        tree->moves = (ls_state_t*)malloc(sizeof(ls_state_t) * _LS_TREE_CHILDREN_ARRAY_INCREMENT);
-        tree->_moves_array_length = _LS_TREE_CHILDREN_ARRAY_INCREMENT;
+        tree->moves = (ls_state_t*)malloc(sizeof(ls_state_t) * LS_TREE_CHILDREN_ARRAY_INCREMENT);
+        tree->_moves_array_length = LS_TREE_CHILDREN_ARRAY_INCREMENT;
     } else if (tree->moves_length == tree->_moves_array_length) {
-        tree->_moves_array_length += _LS_TREE_CHILDREN_ARRAY_INCREMENT;
+        tree->_moves_array_length += LS_TREE_CHILDREN_ARRAY_INCREMENT;
         auto const new_children = (ls_state_t*)realloc(tree->moves, sizeof(ls_state_t) * tree->_moves_array_length);
 
         if (new_children == nullptr) {
