@@ -19,17 +19,19 @@ project(LightShark C)
 add_library(LightShark STATIC
     include/LightShark.h
 
+    include/LSTypes.h
     include/LSBoard.h
     include/LSEngine.h
     include/LSTree.h
     include/LSState.h
+    include/LSGenereteMoves.h
     include/LSMoves.h
 
     src/LSBoard.c
     src/LSEngine.c
     src/LSTree.c
     src/LSState.c
-    src/LSMoves.c
+    src/LSGenereteMoves.c
 )
 
 target_compile_options(LightShark PRIVATE ${COMPILE_OPTIONS})

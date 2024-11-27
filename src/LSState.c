@@ -1,6 +1,8 @@
 
 #include "LSState.h"
 
+#include "LSMoves.h"
+
 #define LS_STATE_IS_BOARD_CHECK_ATTACK(piece, masks, directions, directions_count) \
 { \
     for (int d = 0; d < directions_count; d++) { \

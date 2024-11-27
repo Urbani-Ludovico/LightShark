@@ -1,6 +1,9 @@
 
 #include "LSBoard.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 ls_board_t ls_board_init() {
     return calloc(1, sizeof(struct _ls_board_t));
 }

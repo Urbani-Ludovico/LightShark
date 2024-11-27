@@ -1,5 +1,10 @@
 
+#include "LSGenereteMoves.h"
+
+#include "LSBoard.h"
 #include "LSMoves.h"
+#include "LSState.h"
+#include "LSTree.h"
 
 #include <string.h>
 
@@ -23,7 +28,7 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                 new_this_king &= occupied;
 
                 if (new_this_king) {
-                    ls_board_state_t const new_king = king & ~this_king | new_this_king;
+                    ls_board_state_t const new_king = (king & ~this_king) | new_this_king;
 
                     ls_board_t const new_board = ls_board_init();
                     memcpy(new_board, &new_king, sizeof(struct _ls_board_t));

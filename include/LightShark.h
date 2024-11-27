@@ -3,7 +3,10 @@
 
 #include "LSBoard.h"
 #include "LSEngine.h"
-#include "LSTree.h"
+#include "LSGenereteMoves.h"
+#include "LSMoves.h"
 #include "LSState.h"
+#include "LSTree.h"
+#include "LSTypes.h"
 
 #endif

@@ -1,6 +1,11 @@
 
 #include "LSEngine.h"
 
+#include "LSBoard.h"
+#include "LSTree.h"
+
+#include <stdlib.h>
+
 ls_t ls_init() {
     auto const engine = (ls_t)malloc(sizeof(struct _ls_t));
 

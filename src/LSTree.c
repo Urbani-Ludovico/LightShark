@@ -1,6 +1,11 @@
 
 #include "LSTree.h"
 
+#include "LSBoard.h"
+
+#include <stdlib.h>
+#include <stdint.h>
+
 ls_state_t ls_tree_init() {
     auto const tree = (ls_state_t)malloc(sizeof(struct _ls_state_t));
 
