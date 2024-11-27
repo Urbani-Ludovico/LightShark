@@ -1,6 +1,8 @@
 
 #include "LSBoard.h"
 
+#include "LSMoves.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -49,19 +51,19 @@ void ls_board_print(const ls_board_t board) {
 }
 
 void ls_board_start(const ls_board_t board) {
-    board->white_king = 0x8;
-    board->white_queen = 0x10;
-    board->white_rook = 0x81;
-    board->white_knight = 0x42;
-    board->white_bishop = 0x24;
-    board->white_pawn = 0xff00;
+    board->white_king = LS_START_POSITION_WHITE_KING;
+    board->white_queen = LS_START_POSITION_WHITE_QUEEN;
+    board->white_rook = LS_START_POSITION_WHITE_ROOK;
+    board->white_knight = LS_START_POSITION_WHITE_KNIGHT;
+    board->white_bishop = LS_START_POSITION_WHITE_BISHOP;
+    board->white_pawn = LS_START_POSITION_WHITE_PAWN;
 
-    board->black_king = 0x800000000000000;
-    board->black_queen = 0x1000000000000000;
-    board->black_rook = 0x8100000000000000;
-    board->black_knight = 0x4200000000000000;
-    board->black_bishop = 0x2400000000000000;
-    board->black_pawn = 0xff000000000000;
+    board->black_king = LS_START_POSITION_BLACK_KING;
+    board->black_queen = LS_START_POSITION_BLACK_QUEEN;
+    board->black_rook = LS_START_POSITION_BLACK_ROCK;
+    board->black_knight = LS_START_POSITION_BLACK_KNIGHT;
+    board->black_bishop = LS_START_POSITION_BLACK_BISHOP;
+    board->black_pawn = LS_START_POSITION_BLACK_PAWN;
 }
 
 char* ls_board_to_string(const ls_board_t board) {

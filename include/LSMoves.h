@@ -6,6 +6,24 @@
 
 #include <stdint.h>
 
+// Start configuration
+
+#define LS_START_POSITION_WHITE_KING 0x8
+#define LS_START_POSITION_WHITE_QUEEN 0x10
+#define LS_START_POSITION_WHITE_ROOK 0x81
+#define LS_START_POSITION_WHITE_KNIGHT 0x42
+#define LS_START_POSITION_WHITE_BISHOP 0x24
+#define LS_START_POSITION_WHITE_PAWN 0xff00
+
+#define LS_START_POSITION_BLACK_KING 0x800000000000000
+#define LS_START_POSITION_BLACK_QUEEN 0x1000000000000000
+#define LS_START_POSITION_BLACK_ROCK 0x8100000000000000
+#define LS_START_POSITION_BLACK_KNIGHT 0x4200000000000000
+#define LS_START_POSITION_BLACK_BISHOP 0x2400000000000000
+#define LS_START_POSITION_BLACK_PAWN 0xFF000000000000
+
+// Moves
+
 constexpr uint8_t _ls_king_moves = 8;
 constexpr int8_t _ls_king_moves_directions[] = {8, 7, -1, -9, -8, -7, 1, 9};
 constexpr ls_board_state_t _ls_king_moves_from_masks[] = {
