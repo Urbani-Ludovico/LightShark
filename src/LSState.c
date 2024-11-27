@@ -3,6 +3,7 @@
 
 #include "LSMoves.h"
 
+#ifndef LS_STATE_IS_BOARD_CHECK_ATTACK
 #define LS_STATE_IS_BOARD_CHECK_ATTACK(piece, masks, directions, directions_count) \
 { \
     for (int d = 0; d < directions_count; d++) { \
@@ -15,6 +16,7 @@
         } \
     } \
 }
+#endif
 
 ls_check_t ls_state_is_check(ls_state_t const state) {
     if (state->is_check == LS_UNDEFINED_CHECK) {
