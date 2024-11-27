@@ -23,12 +23,12 @@ ls_t ls_init() {
     engine->turn = LS_PLAYER_WHITE;
     engine->moves_count = 0;
     engine->captured_white_queen = 0;
-    engine->captured_white_rock = 0;
+    engine->captured_white_rook = 0;
     engine->captured_white_knight = 0;
     engine->captured_white_bishop = 0;
     engine->captured_white_pawn = 0;
     engine->captured_black_queen = 0;
-    engine->captured_black_rock = 0;
+    engine->captured_black_rook = 0;
     engine->captured_black_knight = 0;
     engine->captured_black_bishop = 0;
     engine->captured_black_pawn = 0;

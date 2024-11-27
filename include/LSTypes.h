@@ -51,12 +51,12 @@ struct _ls_t {
     ls_player_t turn;
     uint16_t moves_count;
     uint8_t captured_white_queen;
-    uint8_t captured_white_rock;
+    uint8_t captured_white_rook;
     uint8_t captured_white_knight;
     uint8_t captured_white_bishop;
     uint8_t captured_white_pawn;
     uint8_t captured_black_queen;
-    uint8_t captured_black_rock;
+    uint8_t captured_black_rook;
     uint8_t captured_black_knight;
     uint8_t captured_black_bishop;
     uint8_t captured_black_pawn;
@@ -81,14 +81,14 @@ struct _ls_state_t {
 struct _ls_board_t {
     ls_board_state_t white_king;
     ls_board_state_t white_queen;
-    ls_board_state_t white_rock;
+    ls_board_state_t white_rook;
     ls_board_state_t white_knight;
     ls_board_state_t white_bishop;
     ls_board_state_t white_pawn;
 
     ls_board_state_t black_king;
     ls_board_state_t black_queen;
-    ls_board_state_t black_rock;
+    ls_board_state_t black_rook;
     ls_board_state_t black_knight;
     ls_board_state_t black_bishop;
     ls_board_state_t black_pawn;

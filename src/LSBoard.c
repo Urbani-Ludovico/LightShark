@@ -19,8 +19,8 @@ ls_board_t ls_board_copy(ls_board_t const board) {
     copy->black_bishop = board->black_bishop;
     copy->white_knight = board->white_knight;
     copy->black_knight = board->black_knight;
-    copy->white_rock = board->white_rock;
-    copy->black_rock = board->black_rock;
+    copy->white_rook = board->white_rook;
+    copy->black_rook = board->black_rook;
     copy->white_pawn = board->white_pawn;
     copy->black_pawn = board->black_pawn;
 
@@ -51,14 +51,14 @@ void ls_board_print(const ls_board_t board) {
 void ls_board_start(const ls_board_t board) {
     board->white_king = 0x8;
     board->white_queen = 0x10;
-    board->white_rock = 0x81;
+    board->white_rook = 0x81;
     board->white_knight = 0x42;
     board->white_bishop = 0x24;
     board->white_pawn = 0xff00;
 
     board->black_king = 0x800000000000000;
     board->black_queen = 0x1000000000000000;
-    board->black_rock = 0x8100000000000000;
+    board->black_rook = 0x8100000000000000;
     board->black_knight = 0x4200000000000000;
     board->black_bishop = 0x2400000000000000;
     board->black_pawn = 0xff000000000000;
@@ -74,7 +74,7 @@ char* ls_board_to_string(const ls_board_t board) {
             string[i] = 'K';
         } else if (board->white_queen & and) {
             string[i] = 'Q';
-        } else if (board->white_rock & and) {
+        } else if (board->white_rook & and) {
             string[i] = 'R';
         } else if (board->white_knight & and) {
             string[i] = 'N';
@@ -86,7 +86,7 @@ char* ls_board_to_string(const ls_board_t board) {
             string[i] = 'k';
         } else if (board->black_queen & and) {
             string[i] = 'q';
-        } else if (board->black_rock & and) {
+        } else if (board->black_rook & and) {
             string[i] = 'r';
         } else if (board->black_knight & and) {
             string[i] = 'n';
