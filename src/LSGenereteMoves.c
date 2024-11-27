@@ -145,6 +145,49 @@ ls_state_moves_generation_status ls_state_moves_generate(ls_state_t const state)
                 }
             }
         }
+
+        // Pawn
+        if (pawn & (1ULL << i)) {
+            if ((state->turn == LS_PLAYER_WHITE ? 0x00FFFFFFFFFFFFFF : 0xFFFFFFFFFFFFFF00) & (1ULL << i)) {
+                ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 8)) : (1ULL >> (i - 8))) & empty_squares;
+
+                if (new_pawn) {
+                    new_pawn |= (pawn & ~(1ULL << i));
+
+                    LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
+                }
+            }
+
+            if ((state->turn == LS_PLAYER_WHITE ? 0x007F7F7F7F7F7F7F : 0x7F7F7F7F7F7F7F00) & (1ULL << i)) {
+                ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 9)) : (1ULL >> (i - 7))) & opponent_positions;
+
+                if (new_pawn) {
+                    new_pawn |= (pawn & ~(1ULL << i));
+
+                    LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
+                }
+            }
+
+            if ((state->turn == LS_PLAYER_WHITE ? 0x00FEFEFEFEFEFEFE : 0xFEFEFEFEFEFEFE00) & (1ULL << i)) {
+                ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 7)) : (1ULL >> (i - 9))) & opponent_positions;
+
+                if (new_pawn) {
+                    new_pawn |= (pawn & ~(1ULL << i));
+
+                    LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
+                }
+            }
+
+            if ((state->turn == LS_PLAYER_WHITE ? 0x000000000000FF00 : 0x00FF000000000000) & (1ULL << i)) {
+                ls_board_state_t new_pawn = (state->turn == LS_PLAYER_WHITE ? (1ULL << (i + 16)) : (1ULL >> (i - 16))) & opponent_positions;
+
+                if (new_pawn) {
+                    new_pawn |= (pawn & ~(1ULL << i));
+
+                    LS_STATE_MOVES_GENERATE_INSERT_MOVE(pawn)
+                }
+            }
+        }
     }
 
     return state->moves_length > 0 ? LS_STATE_GENERATION_MOVES_DONE : LS_STATE_GENERATION_MOVES_EMPTY;
