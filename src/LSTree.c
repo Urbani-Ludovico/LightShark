@@ -13,7 +13,6 @@ ls_state_t ls_tree_init() {
     tree->board = nullptr;
 
     // Board status
-    tree->capture = 0x0;
     tree->is_check = LS_UNDEFINED_CHECK;
     tree->turn = LS_UNDEFINED_PLAYER;
 
